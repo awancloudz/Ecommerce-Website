@@ -1,1 +1,123 @@
-<p>transaction works!</p>
+<div class="breadcrumb-area breadcrumb-bg-1 pt-50 pb-70 mb-50">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="breadcrumb-title">Transaction</h1>
+
+                <!--=======  breadcrumb list  =======-->
+
+                <ul class="breadcrumb-list">
+                    <li class="breadcrumb-list__item"><a href="index.html">HOME</a></li>
+                    <li class="breadcrumb-list__item breadcrumb-list__item--active">Transaction</li>
+                </ul>
+
+                <!--=======  End of breadcrumb list  =======-->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="shopping-cart-area mb-50">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 mb-30">
+                <!--=======  cart table  =======-->
+
+                <div class="cart-table-container">
+                    <table class="cart-table">
+                        <thead>
+                            <tr>
+                                <th class="product-name" colspan="2">Produk</th>
+                                <th class="product-price">Harga</th>
+                                <th class="product-quantity">Jumlah</th>
+                                <th class="product-subtotal">Total</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let detail of detaillist">
+                                <td class="product-thumbnail">
+                                    <a href="{{ detail.produk.link }}">
+                                        <img src="assets/images/products/{{ detail.produk.foto }}" class="img-fluid" alt="">
+                                    </a>
+                                </td>
+                                <td class="product-name">
+                                    <a href="{{ detail.produk.link }}">{{ detail.produk.namaproduk }}</a>
+                                    <span class="product-variation">Color: Black</span>
+                                </td>
+
+                                <td class="product-price"><span class="price">{{ detail.produk.hargajual | currency:"IDR":""}}</span></td>
+
+                                <td class="product-quantity">
+                                    <span class="amount">{{ detail.jumlah }}</span>
+                                </td>
+
+                                <td class="total-price"><span class="price">{{ (detail.produk.hargajual * detail.jumlah ) | currency:"IDR":""}}</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!--=======  End of cart table  =======-->
+            </div>
+            <div class="col-lg-12 mb-80">
+                <!--=======  coupon area  =======-->
+
+                <div class="cart-coupon-area pb-30">
+                    <div class="row align-items-center">
+                        <div class="col-lg-8 mb-md-30 mb-sm-30">
+                            <!--=======  coupon form  =======-->
+
+                            <div class="lezada-form coupon-form">
+                                <form action="#">
+                                    <div class="row">
+                                        <!-- <div class="col-md-7 mb-sm-10">
+                                            <input type="text" placeholder="Masukkan kode kupon untuk diskon">
+                                        </div>
+                                        <div class="col-md-5">
+                                            <button class="lezada-button lezada-button--medium">Konfirmasi</button>
+                                        </div> -->
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!--=======  End of coupon form  =======-->
+                        </div>
+
+                        <div class="col-lg-4 text-left text-lg-right">
+                            <div class="cart-calculation-area" *ngFor="let trans of transactionlist">
+                                <h2 class="mb-40">Total Belanja</h2>
+        
+                                <table class="cart-calculation-table mb-30">
+                                    <tr>
+                                        <th>DISKON</th>
+                                        <td class="subtotal">{{ trans.totaldiskon }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>KURIR</th>
+                                        <td class="subtotal">{{ trans.kurir }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>ONGKIR</th>
+                                        <td class="subtotal">{{ trans.totalongkir | currency:"IDR":""}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>SUB TOTAL</th>
+                                        <td class="total">{{ trans.subtotal | currency:"IDR":"" }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--=======  End of coupon area  =======-->
+            </div>
+
+            <div class="col-xl-4 offset-xl-8 col-lg-5 offset-lg-7">
+                
+            </div>
+        </div>
+    </div>
+</div>

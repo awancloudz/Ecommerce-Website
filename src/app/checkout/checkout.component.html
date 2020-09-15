@@ -1,1 +1,249 @@
-<p>checkout works!</p>
+	<!--=======  breadcrumb area =======-->
+
+	<div class="breadcrumb-area breadcrumb-bg-1 pt-50 pb-70 mb-50">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="breadcrumb-title">Checkout</h1>
+
+					<!--=======  breadcrumb list  =======-->
+
+					<ul class="breadcrumb-list">
+						<li class="breadcrumb-list__item"><a href="index.html">HOME</a></li>
+						<li class="breadcrumb-list__item breadcrumb-list__item--active">checkout</li>
+					</ul>
+
+					<!--=======  End of breadcrumb list  =======-->
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--=======  End of breadcrumb area =======-->
+
+	<!--=============================================
+	=            checkout page content         =
+	=============================================-->
+
+	<div class="checkout-page-area mb-50">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="lezada-form">
+						<!-- Checkout Form s-->
+						<form action="#" class="checkout-form">
+							<div class="row row-40">
+
+								<div class="col-lg-7 mb-20">
+
+									<!-- Billing Address -->
+									<div id="billing-form" class="mb-40">
+										<h4 class="checkout-title">Alamat Utama</h4>
+
+										<div class="row" *ngFor="let kirim of profile">
+
+											<div class="col-md-6 col-12 mb-20">
+												<label>Nama*</label><br>
+												{{ kirim.nama }}
+                                                <input type="hidden" [(ngModel)]="id" name="id">
+                                                <input type="hidden" [(ngModel)]="id_users" name="id_users">
+                                                <input type="hidden" [(ngModel)]="id_alamat" name="id_alamat">
+                                                <input type="hidden" [(ngModel)]="id_kota" name="id_kota">
+											</div>
+
+											<div class="col-md-6 col-12 mb-20">
+												<label>No.Handphone*</label><br>
+												{{ kirim.nohp }}
+											</div>
+
+											<div class="col-12 mb-20">
+												<label>Alamat*</label><br>
+												{{ kirim.alamat }}
+											</div>
+
+											<div class="col-md-6 col-12 mb-20">
+												<label>Kota*</label><br>
+												{{ namakota }}
+											</div>
+
+											<div class="col-md-6 col-12 mb-20">
+												<label>Kode Pos*</label><br>
+												{{ kirim.kodepos }}
+											</div>
+
+											<div class="col-12 mb-20">
+												<p>atau</p>
+												<h4 class="checkout-title">Pilih Alamat Lainnya</h4>
+												<table width="100%">
+													<tr *ngFor="let address of addresslist">
+														<td *ngIf="address.utama == '2'"><b>ID: {{ address.namaalamat }}</b><br>
+															Penerima: {{ address.nama }}<br>
+															Alamat: {{ address.alamat }}<br>
+															Kota/Kab: {{ address.kota.namakota }}<br>
+															Kode Pos: {{ address.kodepos }}<hr>
+														</td>
+														<td align="right" style="vertical-align: text-top;" *ngIf="address.utama == '2'"><button class="btn btn-warning" (click)="setbutton(address)">Pilih</button></td>
+													</tr>
+												</table>
+												<a class="btn btn-primary" href="address/add">Tambah Alamat</a>
+											</div>
+
+											<!-- <div class="col-12 mb-20">
+												<div class="check-box">
+													<input type="checkbox" id="shiping_address" data-shipping>
+													<label for="shiping_address">Tambah Alamat</label>
+												</div>
+											</div> -->
+
+										</div>
+
+									</div>
+
+									<!-- Shipping Address -->
+									<!-- <div id="shipping-form" class="mb-40">
+										<h4 class="checkout-title">Shipping Address</h4>
+
+										<div class="row">
+
+											<div class="col-md-6 col-12 mb-20">
+												<label>First Name*</label>
+												<input type="text" placeholder="First Name">
+											</div>
+
+											<div class="col-md-6 col-12 mb-20">
+												<label>Last Name*</label>
+												<input type="text" placeholder="Last Name">
+											</div>
+
+											<div class="col-md-6 col-12 mb-20">
+												<label>Email Address*</label>
+												<input type="email" placeholder="Email Address">
+											</div>
+
+											<div class="col-md-6 col-12 mb-20">
+												<label>Phone no*</label>
+												<input type="text" placeholder="Phone number">
+											</div>
+
+											<div class="col-12 mb-20">
+												<label>Company Name</label>
+												<input type="text" placeholder="Company Name">
+											</div>
+
+											<div class="col-12 mb-20">
+												<label>Address*</label>
+												<input type="text" placeholder="Address line 1">
+												<input type="text" placeholder="Address line 2">
+											</div>
+
+											<div class="col-md-6 col-12 mb-20">
+												<label>Country*</label>
+												<select class="nice-select">
+													<option>Bangladesh</option>
+													<option>China</option>
+													<option>country</option>
+													<option>India</option>
+													<option>Japan</option>
+												</select>
+											</div>
+
+											<div class="col-md-6 col-12 mb-20">
+												<label>Town/City*</label>
+												<input type="text" placeholder="Town/City">
+											</div>
+
+											<div class="col-md-6 col-12 mb-20">
+												<label>State*</label>
+												<input type="text" placeholder="State">
+											</div>
+
+											<div class="col-md-6 col-12 mb-20">
+												<label>Zip Code*</label>
+												<input type="text" placeholder="Zip Code">
+											</div>
+
+										</div>
+
+									</div> -->
+
+								</div>
+
+								<div class="col-lg-5">
+									<form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+									<div class="row">
+										<!-- Ongkir Total -->
+										<div class="col-12 mb-60" *ngFor="let cart2 of cartlist.koleksi2">
+											<h4 class="checkout-title">Jasa Pengiriman</h4>
+											<div class="form-group">
+												<select name="kurir" class="form-control">
+													<option value="jne">JNE</option>
+												</select>
+											</div>
+											<h4 class="checkout-title">Layanan</h4>
+											<div class="form-group">
+												<select name="service" class="form-control" (change)="servicebutton()" [(ngModel)]="service"  formControlName="service" [ngClass]="{ 'is-invalid': submitted && f.service.errors }">
+													<option value="{{ cost.costs }}" *ngFor="let cost of costlist">{{ cost.service }} ({{ cost.estimate }}) Hari - {{ cost.costs | currency:"IDR":"Rp. " }}</option>
+												</select>
+											</div>
+											<div *ngIf="submitted && f.service.errors" class="invalid-feedback">
+												<div *ngIf="f.service.errors.required">Layanan Kurir Wajib Dipilih</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+
+										<!-- Cart Total -->
+										<div class="col-12 mb-60" *ngFor="let cart2 of cartlist.koleksi2">
+
+											<h4 class="checkout-title">Informasi Order</h4>
+
+											<div class="checkout-cart-total">
+
+												<p>Total Belanja <span>{{ cart2.subtotal | currency:"IDR":"" }}</span></p>
+												<p>Ongkir <span>{{ cart2.totalongkir | currency:"IDR":"" }}</span></p>
+
+												<h4>Sub Total <span>{{ cart2.totalbayar | currency:"IDR":"" }}</span></h4>
+
+											</div>
+
+										</div>
+
+										<!-- Payment Method -->
+										<div class="col-12">
+
+											<h4 class="checkout-title">Metode Pembayaran</h4>
+
+											<div class="checkout-payment-method">
+
+												<div class="single-method">
+													<input type="radio" id="payment_bank" name="payment-method" value="bank">
+													<label for="payment_bank">Transfer Bank</label>
+													<p data-method="bank">Transfer tepat sesuai total + ongkir ke Rekening Kami. Rekening akan diinformasikan setelah anda klik tombol konfirmasi pembayaran.</p>
+												</div>
+
+												<div class="single-method">
+													<input type="radio" id="payment_cash" name="payment-method" value="cash">
+													<label for="payment_cash">COD (Cash on Delivery)</label>
+													<p data-method="cash">Pembayaran langsung di tempat, pembeli & penjual bertemu di titik yang disepakati.</p>
+												</div>
+
+											</div>
+
+											<button class="lezada-button lezada-button--medium mt-30">Konfirmasi Pembayaran</button>
+
+										</div>
+
+									</div>
+									</form>
+								</div>
+
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--=====  End of checkout page content  ======-->

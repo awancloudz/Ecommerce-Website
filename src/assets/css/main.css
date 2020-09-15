@@ -731,6 +731,75 @@ a.scroll-top:hover {
   color: #333333;
 }
 
+/*----------  notifications overlay  ----------*/
+/*----------  offcanvas notifications  ----------*/
+.notifications-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9998;
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.3s;
+}
+.notifications-overlay.active-notifications-overlay {
+  visibility: visible;
+  opacity: 1;
+  transition: 0.3s;
+}
+.notifications-overlay.active-notifications-overlay .notifications-overlay-content {
+  transform: translateX(0);
+  transition: 0.6s;
+}
+.notifications-overlay.active-notifications-overlay:after {
+  visibility: visible;
+  opacity: 0.5;
+  transition: 0.3s;
+}
+.notifications-overlay:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  opacity: 0;
+  visibility: hidden;
+  z-index: -1;
+  content: "";
+  transition: 0.3s;
+}
+.notifications-overlay .notifications-overlay-content {
+  background-color: #ffffff;
+  width: 380px;
+  height: 100%;
+  z-index: 9999;
+  padding: 20px;
+  position: fixed;
+  transform: translateX(100%);
+  transition: 0.6s;
+  top: 0;
+  right: 0;
+  overflow: auto;
+}
+.notifications-overlay .notifications-overlay-content .close-icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.notifications-overlay .notifications-overlay-content .close-icon a {
+  transition: 0.6s;
+}
+.notifications-overlay .notifications-overlay-content .close-icon a:hover {
+  transform: rotate(90deg);
+}
+.notifications-overlay .notifications-overlay-content .close-icon a i {
+  font-size: 25px;
+  color: #333333;
+}
+
 /*----------  cart overlay  ----------*/
 /*----------  offcanvas cart  ----------*/
 .cart-overlay {
@@ -1528,6 +1597,11 @@ nav.site-nav > ul > li ul.mega-menu-column-5 > li .mega-sub-menu li:last-child a
   }
 }
 @media only screen and (max-width: 479px) {
+  .header-right-icons .single-icon.notifications {
+    display: none;
+  }
+}
+@media only screen and (max-width: 479px) {
   .header-right-icons .single-icon.user-login {
     display: none;
   }
@@ -1555,7 +1629,7 @@ nav.site-nav > ul > li ul.mega-menu-column-5 > li .mega-sub-menu li:last-child a
 }
 
 /* overlay close */
-.overlay-close, .wishlist-overlay-close, .cart-overlay-close {
+.overlay-close, .wishlist-overlay-close, .cart-overlay-close, .notifications-overlay-close {
   position: absolute;
   width: 100%;
   height: 100%;

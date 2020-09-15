@@ -1,1 +1,129 @@
-<p>register works!</p>
+	<!--=======  breadcrumb area =======-->
+
+	<div class="breadcrumb-area breadcrumb-bg-1 pt-50 pb-70 mb-50">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="breadcrumb-title">Customer login</h1>
+
+					<!--=======  breadcrumb list  =======-->
+
+					<ul class="breadcrumb-list">
+						<li class="breadcrumb-list__item"><a href="index.html">HOME</a></li>
+						<li class="breadcrumb-list__item breadcrumb-list__item--active">customer login</li>
+					</ul>
+
+					<!--=======  End of breadcrumb list  =======-->
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--=======  End of breadcrumb area =======-->
+
+	<!--=============================================
+    =            login page content         =
+    =============================================-->
+
+	<div class="login-area mb-50 mb-md-70 mb-sm-70 mb-xs-70 mb-xxs-70">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 mb-md-50 mb-sm-50">
+					<div class="lezada-form login-form">
+						<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+							<div class="row">
+								<div class="col-lg-12">
+									<!--=======  login title  =======-->
+
+									<div class="section-title section-title--login text-center mb-50">
+										<h2 class="mb-20">Login</h2>
+										<p>Great to have you back!</p>
+									</div>
+
+									<!--=======  End of login title  =======-->
+								</div>
+								<div class="col-lg-12 mb-60">
+									<input type="text" placeholder="Email" [(ngModel)]="email" name="email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+									<div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+										<div *ngIf="f.email.errors.required">Email Wajib Diisi</div>
+										<div *ngIf="f.email.errors.email">Email Tidak Valid</div>
+									</div>
+								</div>
+								<div class="col-lg-12 mb-60">
+									<input type="password" placeholder="Password" [(ngModel)]="password" name="password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+									<div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+										<div *ngIf="f.password.errors.required">Pasword Wajib Diisi</div>
+										<div *ngIf="f.password.errors.minlength">Pasword Minimal 6 karakter</div>
+									</div>
+								</div>
+								<div class="col-lg-12 text-center mb-30">
+									<button class="lezada-button lezada-button--medium">Login</button>
+								</div>
+
+								<div class="col-lg-12">
+									<input type="checkbox"> <span class="remember-text"> Remember me</span>
+									<a href="#" class="reset-pass-link">Lost your password?</a>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="lezada-form login-form--register">
+						<form [formGroup]="registerForm" (ngSubmit)="onSubmit2()">
+							<div class="row">
+								<div class="col-lg-12">
+									<!--=======  login title  =======-->
+
+									<div class="section-title section-title--login text-center mb-50">
+										<h2 class="mb-20">Register</h2>
+										<p>If you don’t have an account, register now!</p>
+									</div>
+
+									<!--=======  End of login title  =======-->
+								</div>
+								<div class="col-lg-12 mb-30">
+									<label for="nama">Nama <span class="required">*</span> </label>
+									<input type="text" [(ngModel)]="nama" name="nama" formControlName="nama" [ngClass]="{ 'is-invalid': submitted2 && g.nama.errors }">
+									<div *ngIf="submitted2 && g.nama.errors" class="invalid-feedback">
+										<div *ngIf="g.nama.errors.required">Nama Wajib Diisi</div>
+									</div>
+								</div>
+								<div class="col-lg-12 mb-30">
+									<label for="nohp">No.Handphone <span class="required">*</span> </label>
+									<input type="text" [(ngModel)]="nohp" name="nohp" formControlName="nohp" [ngClass]="{ 'is-invalid': submitted2 && g.nohp.errors }">
+									<div *ngIf="submitted2 && g.nohp.errors" class="invalid-feedback">
+										<div *ngIf="g.nohp.errors.required">No.Handphone Wajib Diisi</div>
+									</div>
+								</div>
+								<div class="col-lg-12 mb-30">
+									<label for="email">Email <span class="required">*</span> </label>
+									<input type="text" [(ngModel)]="email" name="email" formControlName="email" [ngClass]="{ 'is-invalid': submitted2 && g.email.errors }">
+									<div *ngIf="submitted2 && g.email.errors" class="invalid-feedback">
+										<div *ngIf="g.email.errors.required">Email Wajib Diisi</div>
+										<div *ngIf="g.email.errors.email">Email Tidak Valid</div>
+									</div>
+								</div>
+								<div class="col-lg-12 mb-50">
+									<label for="password">Password <span class="required">*</span> </label>
+									<input type="password" [(ngModel)]="password" name="password" formControlName="password" [ngClass]="{ 'is-invalid': submitted2 && g.password.errors }">
+									<div *ngIf="submitted2 && g.password.errors" class="invalid-feedback">
+										<div *ngIf="g.password.errors.required">Pasword Wajib Diisi</div>
+										<div *ngIf="g.password.errors.minlength">Pasword Minimal 6 karakter</div>
+									</div>
+								</div>
+								<div class="col-lg-12 text-center">
+									<button class="lezada-button lezada-button--medium">Register</button>
+								</div>
+
+
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--=====  End of login content  ======-->

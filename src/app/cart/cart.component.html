@@ -1,1 +1,140 @@
-<p>cart works!</p>
+	<!--=======  breadcrumb area =======-->
+
+	<div class="breadcrumb-area breadcrumb-bg-1 pt-50 pb-70 mb-50">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="breadcrumb-title">Shopping Cart</h1>
+
+					<!--=======  breadcrumb list  =======-->
+
+					<ul class="breadcrumb-list">
+						<li class="breadcrumb-list__item"><a href="index.html">HOME</a></li>
+						<li class="breadcrumb-list__item breadcrumb-list__item--active">shopping cart</li>
+					</ul>
+
+					<!--=======  End of breadcrumb list  =======-->
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--=======  End of breadcrumb area =======-->
+
+	<!--=============================================
+	=            cart page content         =
+	=============================================-->
+
+	<div class="shopping-cart-area mb-50">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 mb-30">
+					<!--=======  cart table  =======-->
+
+					<div class="cart-table-container">
+						<table class="cart-table">
+							<thead>
+								<tr>
+									<th class="product-name" colspan="2">Produk</th>
+									<th class="product-price">Harga</th>
+									<th class="product-quantity">Jumlah</th>
+									<th class="product-subtotal">Total</th>
+									<th class="product-remove">&nbsp;</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								<tr *ngFor="let cart of cartlist.koleksi; let i = index;">
+									<td class="product-thumbnail">
+										<a href="{{ cart.produk.link }}">
+											<img src="assets/images/products/{{ cart.produk.foto }}" class="img-fluid" alt="">
+										</a>
+									</td>
+									<td class="product-name">
+										<a href="{{ cart.produk.link }}">{{ cart.produk.namaproduk }}</a>
+										<span class="product-variation">Color: Black</span>
+									</td>
+
+									<td class="product-price"><span class="price">{{ cart.produk.hargajual | currency:"IDR":""}}</span></td>
+
+									<td class="product-quantity">
+										<div class="pro-qty d-inline-block mx-0">
+											<a (click)="decrement(i)"><i class="fa fa-minus"></i></a>&nbsp;&nbsp;
+                                                <span class="amount">{{ cart.jumlah }}</span>&nbsp;&nbsp;
+                                            <a (click)="increment(i)"><i class="fa fa-plus"></i></a>
+										</div>
+									</td>
+
+									<td class="total-price"><span class="price">{{ (cart.produk.hargajual * cart.jumlah ) | currency:"IDR":""}}</span></td>
+
+									<td class="product-remove">
+										<a (click)="deletebutton(cart)">
+											<i class="ion-android-close"></i>
+										</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<!--=======  End of cart table  =======-->
+				</div>
+				<div class="col-lg-12 mb-80">
+					<!--=======  coupon area  =======-->
+
+					<div class="cart-coupon-area pb-30">
+						<div class="row align-items-center">
+							<div class="col-lg-8 mb-md-30 mb-sm-30">
+								<!--=======  coupon form  =======-->
+
+								<div class="lezada-form coupon-form">
+									<form action="#">
+										<div class="row">
+											<div class="col-md-7 mb-sm-10">
+												<input type="text" placeholder="Masukkan kode kupon untuk diskon">
+											</div>
+											<div class="col-md-5">
+												<button class="lezada-button lezada-button--medium">Konfirmasi</button>
+											</div>
+										</div>
+									</form>
+								</div>
+
+								<!--=======  End of coupon form  =======-->
+							</div>
+
+							<div class="col-lg-4 text-left text-lg-right">
+								<div class="cart-calculation-area" *ngFor="let cart2 of cartlist.koleksi2">
+									<h2 class="mb-40">Total Belanja</h2>
+			
+									<table class="cart-calculation-table mb-30">
+										<tr>
+											<th>DISKON</th>
+											<td class="subtotal">0</td>
+										</tr>
+										<tr>
+											<th>SUB TOTAL</th>
+											<td class="total">{{ cart2.subtotal | currency:"IDR":"" }}</td>
+										</tr>
+									</table>
+			
+									<div class="cart-calculation-button text-center">
+										<a class="lezada-button lezada-button--medium" href="checkout">proses checkout</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!--=======  End of coupon area  =======-->
+				</div>
+
+				<div class="col-xl-4 offset-xl-8 col-lg-5 offset-lg-7">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--=====  End of cart page content  ======-->

@@ -1,0 +1,92 @@
+  <!--=======  breadcrumb area =======-->
+
+  <div class="breadcrumb-area breadcrumb-bg-1 pt-50 pb-70 mb-50">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <h1 class="breadcrumb-title">Add Address</h1>
+
+          <!--=======  breadcrumb list  =======-->
+
+          <ul class="breadcrumb-list">
+            <li class="breadcrumb-list__item"><a href="index.html">HOME</a></li>
+            <li class="breadcrumb-list__item breadcrumb-list__item--active">My Account</li>
+          </ul>
+
+          <!--=======  End of breadcrumb list  =======-->
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--=======  End of breadcrumb area =======-->
+
+    <!--=============================================
+  =            my account page content         =
+  =============================================-->
+
+  <div class="my-account-area mb-50 mb-md-70 mb-sm-70 mb-xs-70 mb-xxs-70">
+    <div class="container">
+        <form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="myaccount-content">
+                    <div class="account-details-form">
+                        <div class="single-input-item">
+                            <label for="namaalamat" class="required">ID Alamat (diisi misal: Rumah, Kantor)</label>
+                            <input type="hidden" [(ngModel)]="utama" name="utama">
+                            <input type="text" [(ngModel)]="namaalamat" name="namaalamat"  formControlName="namaalamat" [ngClass]="{ 'is-invalid': submitted && f.namaalamat.errors }">
+                            <div *ngIf="submitted && f.namaalamat.errors" class="invalid-feedback">
+                                <div *ngIf="f.namaalamat.errors.required">ID Alamat Wajib Diisi</div>
+                            </div>
+                        </div>
+                        <div class="single-input-item">
+                            <label for="nama" class="required">Nama Penerima</label>
+                            <input type="text" [(ngModel)]="nama" name="nama" formControlName="nama" [ngClass]="{ 'is-invalid': submitted && f.nama.errors }">
+                            <div *ngIf="submitted && f.nama.errors" class="invalid-feedback">
+                                <div *ngIf="f.nama.errors.required">Nama Penerima Wajib Diisi</div>
+                            </div>
+                        </div>
+                        <div class="single-input-item">
+                            <label for="nohp" class="required">No.Handphone</label>
+                            <input type="text" [(ngModel)]="nohp" name="nohp" formControlName="nohp" [ngClass]="{ 'is-invalid': submitted && f.nohp.errors }">
+                            <div *ngIf="submitted && f.nohp.errors" class="invalid-feedback">
+                                <div *ngIf="f.nohp.errors.required">No.Handphone Wajib Diisi</div>
+                            </div>
+                        </div>
+                        <div class="single-input-item">
+                            <label for="alamat" class="required">Alamat Lengkap RT,RW,Kelurahan,Kecamatan</label>
+                            <input type="text" [(ngModel)]="alamat" name="alamat"  formControlName="alamat" [ngClass]="{ 'is-invalid': submitted && f.alamat.errors }">
+                            <div *ngIf="submitted && f.alamat.errors" class="invalid-feedback">
+                                <div *ngIf="f.alamat.errors.required">Alamat Wajib Diisi</div>
+                            </div>
+                        </div>
+                        <div class="single-input-item">
+                            <label for="id_kota" class="required">Pilih Kota & Provinsi</label>
+                            <select [(ngModel)]="id_kota" name="id_kota" placeholder="Pilih Kota" formControlName="id_kota" [ngClass]="{ 'is-invalid': submitted && f.id_kota.errors }">
+                                <option value="{{ city.id }}" *ngFor="let city of citylist">{{ city.namakota }} - {{ city.provinsi.namaprovinsi }} </option>
+                            </select>
+                            <div *ngIf="submitted && f.id_kota.errors" class="invalid-feedback">
+                                <div *ngIf="f.id_kota.errors.required">Kota/Provinsi Wajib Diisi</div>
+                            </div>
+                        </div>
+                        <div class="single-input-item">
+                            <label for="kodepos" class="required">Kode Pos</label>
+                            <input type="number" [(ngModel)]="kodepos" name="kodepos"  formControlName="kodepos" [ngClass]="{ 'is-invalid': submitted && f.kodepos.errors }">
+                            <div *ngIf="submitted && f.kodepos.errors" class="invalid-feedback">
+                                <div *ngIf="f.kodepos.errors.required">Kode Pos Wajib Diisi</div>
+                            </div>
+                        </div>
+                        <div class="single-input-item">
+                          <button class="check-btn sqr-btn">Save Address</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+  </div>
+
+        

@@ -27,12 +27,7 @@
               "src/styles.css"
             ],
             "scripts": [
-              "src/assets/js/vendor/modernizr-2.8.3.min.js",
-              "src/assets/js/vendor/jquery.min.js",
-              "src/assets/js/popper.min.js",
-              "src/assets/js/bootstrap.min.js",
-              "src/assets/js/plugins.js",
-              "src/assets/js/main.js"
+              
             ]
           },
           "configurations": {
@@ -98,12 +93,7 @@
               "src/styles.css"
             ],
             "scripts": [
-              "src/assets/js/vendor/modernizr-2.8.3.min.js",
-              "src/assets/js/vendor/jquery.min.js",
-              "src/assets/js/popper.min.js",
-              "src/assets/js/bootstrap.min.js",
-              "src/assets/js/plugins.js",
-              "src/assets/js/main.js"
+              
             ]
           }
         },

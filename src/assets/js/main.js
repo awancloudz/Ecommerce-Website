@@ -86,6 +86,20 @@
     $("body").removeClass("active-body-search-overlay");
   });
 
+  $("#offcanvas-notifications-icon, #offcanvas-notifications-icon-2").on(
+    "click",
+    function () {
+      $("#notifications-overlay").addClass("active-notifications-overlay");
+      $(".notifications-overlay-close").addClass("active").removeClass("inactive");
+      $("body").addClass("active-body-search-overlay");
+    }
+  );
+
+  $("#notifications-close-icon, .notifications-overlay-close").on("click", function () {
+    $("#notifications-overlay").removeClass("active-notifications-overlay");
+    $(".notifications-overlay-close").addClass("inactive").removeClass("active");
+    $("body").removeClass("active-body-search-overlay");
+  });
   // close on press 'esc' button
 
   $(document).keyup(function (e) {
@@ -105,6 +119,12 @@
       if ($(".active-wishlist-overlay").length) {
         $("#wishlist-overlay").removeClass("active-wishlist-overlay");
         $(".wishlist-overlay-close").addClass("inactive").removeClass("active");
+      }
+
+      //for notifications
+      if ($(".active-notifications-overlay").length) {
+        $("#notifications-overlay").removeClass("active-notifications-overlay");
+        $(".notifications-overlay-close").addClass("inactive").removeClass("active");
       }
 
       $("body").removeClass("active-body-search-overlay");
