@@ -16,8 +16,15 @@ export class CheckoutService {
   private items:CheckoutArray[]=[];
   private items2:CheckoutConfirmationArray[]=[];
   private url:string="http://localhost:8000/transaction";
+  private url2:string="http://localhost:8000/citylist";
   constructor(public http: Http) { 
 
+  }
+  showcity(idcity)
+  {
+    return this.http.get(this.url2 + "/" + idcity).pipe(
+      map((response:Response)=>response.json())
+    );
   }
   showtransaction(user)
   {
@@ -57,8 +64,8 @@ export class CheckoutService {
                   body, options)
                  .pipe(map((response:Response)=>response.json()));
   }
-  saveconfirmation(item:CheckoutConfirmationArray){
-    let body = JSON.stringify(item);
+  saveconfirmation(order){
+    let body = JSON.stringify(order);
     let headers = new Headers({ 'Content-Type': 'application/json'});
     let options = new RequestOptions({ headers: headers, withCredentials: true });
     return this.http.post(this.url + "/confirmation",

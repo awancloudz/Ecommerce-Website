@@ -3,6 +3,7 @@ import { CartArray } from '../cart/cartarray';
 import { CartService } from '../cart.service';
 import { ProfileService } from '../profile.service';
 import { ProfileArray } from '../profile/profilearray';
+import { ProfileStoreArray } from '../profile/profilestorearray';
 import { ProfileAddressArray } from '../profile/profileaddressarray';
 import { ProfileCityArray } from '../profile/profilecityarray';
 import { CheckoutArray } from '../checkout/checkoutarray';
@@ -237,9 +238,9 @@ export class CheckoutComponent implements OnInit {
   styleUrls: ['./checkout.component.css']
 })
 export class CheckoutFinishComponent implements OnInit {
-
-  checkout:any;
-  constructor(public checkoutservice:CheckoutService,public route:ActivatedRoute, public router:Router){
+  profile:ProfileStoreArray[]=[];
+  subtotal:any;
+  constructor(public profileservice:ProfileService,public checkoutservice:CheckoutService,public route:ActivatedRoute, public router:Router){
 
   }
 
@@ -249,7 +250,21 @@ export class CheckoutFinishComponent implements OnInit {
     this.checkoutservice.showcheckout(kodetransaksi).subscribe(
       //Jika data sudah berhasil di load
       (data)=>{
-        this.checkout=data;
+        this.subtotal=data[0].subtotal;
+      },
+      //Jika Error
+      function (error){   
+      },
+      //Tutup Loading
+      function(){
+      }
+    );
+
+    //PROFILE TOKO
+    this.profileservice.showprofile().subscribe(
+      //Jika data sudah berhasil di load
+      (data:ProfileStoreArray[])=>{
+        this.profile=data;
       },
       //Jika Error
       function (error){   

@@ -5,6 +5,7 @@ import { CheckoutConfirmationArray } from '../checkout/checkoutconfirmationarray
 import { CheckoutService } from '../checkout.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ProfileService } from '../profile.service';
 
 @Component({
   selector: 'app-transaction',
@@ -15,7 +16,11 @@ export class TransactionComponent implements OnInit {
   loginstatus = localStorage.getItem('loginstatus');
   transactionlist:CheckoutArray[]=[];
   detaillist:CheckoutArray[]=[];
-  constructor(public route:ActivatedRoute,public checkoutservice:CheckoutService, public router:Router) { }
+  id_city:any;
+  namakota:any;
+  namaprovinsi:any;
+  
+  constructor(public route:ActivatedRoute,public profileservice:ProfileService,public checkoutservice:CheckoutService, public router:Router) { }
 
   ngOnInit() {
     window.scrollTo(0, 0);
@@ -27,6 +32,28 @@ export class TransactionComponent implements OnInit {
         (data:CheckoutArray[])=>{
           this.transactionlist=data;
           //this.spinner.hide();
+          var id_user = data[0].id_users;
+          //TAMPIL ALAMAT UTAMA
+          this.profileservice.showamainddress(id_user).subscribe(
+            (address)=>{
+              this.id_city = address[0].id_kota;
+              //TAMPIL KOTA & PROVINSI
+              this.checkoutservice.showcity(this.id_city).subscribe(
+                (datakota)=>{
+                  this.namakota = datakota[0].namakota;
+                  this.namaprovinsi = datakota[0].provinsi.namaprovinsi;
+                },
+                function (error){   
+                },
+                function(){
+                }
+              );
+            },
+            function (error){   
+            },
+            function(){
+            }
+          );
         },
         //Jika Error
         function (error){   
@@ -35,6 +62,7 @@ export class TransactionComponent implements OnInit {
         function(){
         }
       );
+
       this.checkoutservice.detailransaction(idtransaksi).subscribe(
         //Jika data sudah berhasil di load
         (data:CheckoutArray[])=>{

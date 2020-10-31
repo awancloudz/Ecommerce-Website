@@ -23,7 +23,29 @@
         <div class="row">
             <div class="col-lg-12 mb-30">
                 <!--=======  cart table  =======-->
-
+                <h2 class="mb-20">Data Transaksi</h2>
+                <table class="mb-20" *ngFor="let trans of transactionlist">
+                    <tr>
+                        <th>NO.ORDER</th>
+                        <td class="subtotal"> : {{ trans.kodetransaksi }}</td>
+                    </tr>
+                    <tr>
+                        <th>TANGGAL</th>
+                        <td class="subtotal"> : {{ trans.tanggal | date: 'dd-M-yyyy' }}</td>
+                    </tr>
+                    <tr>
+                        <th>NAMA</th>
+                        <td class="subtotal"> : {{ trans.alamat.nama }}</td>
+                    </tr>
+                    <tr>
+                        <th>ALAMAT</th>
+                        <td class="subtotal"> : {{ trans.alamat.alamat }} - {{ namakota }}, {{ namaprovinsi }} ({{ trans.alamat.kodepos }})</td>
+                    </tr>
+                    <tr>
+                        <th>NO.HANDPHONE</th>
+                        <td class="subtotal"> : {{ trans.alamat.nohp }}</td>
+                    </tr>
+                </table>
                 <div class="cart-table-container">
                     <table class="cart-table">
                         <thead>
@@ -87,9 +109,9 @@
 
                         <div class="col-lg-4 text-left text-lg-right">
                             <div class="cart-calculation-area" *ngFor="let trans of transactionlist">
-                                <h2 class="mb-40">Total Belanja</h2>
+                                <h2 class="mb-20">Total Belanja</h2>
         
-                                <table class="cart-calculation-table mb-30">
+                                <table class="cart-calculation-table mb-20">
                                     <tr>
                                         <th>DISKON</th>
                                         <td class="subtotal">{{ trans.totaldiskon }}</td>

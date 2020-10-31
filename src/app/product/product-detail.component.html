@@ -64,7 +64,7 @@
 									<div class="shop-product__big-image-gallery-slider">
 										<!--=======  single image  =======-->
 										<div class="single-image" *ngFor="let product2 of product.fotoproduk">
-											<img src="assets/images/products/{{ product2.foto }}" class="img-fluid" alt="">
+											<img src="http://localhost:8000/fotoupload/{{ product2.foto }}" class="img-fluid" alt="">
 										</div>
 										<!--=======  End of single image  =======-->
 									</div>
@@ -75,20 +75,13 @@
 
 								<!--=======  shop product small image gallery  =======-->
 
-								<div class="shop-product__small-image-gallery-wrapper">
-
+								<!-- <div class="shop-product__small-image-gallery-wrapper">
 									<div class="shop-product__small-image-gallery-slider">
-
-										<!--=======  single image  =======-->
-
 										<div class="single-image" *ngFor="let product2 of product.fotoproduk">
 											<img src="assets/images/products/{{ product2.foto }}" class="img-fluid" alt="">
 										</div>
-										<!--=======  End of single image  =======-->
-
 									</div>
-
-								</div>
+								</div> -->
 
 								<!--=======  End of shop product small image gallery  =======-->
 							</div>

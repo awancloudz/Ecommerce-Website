@@ -1,0 +1,179 @@
+  <!--=======  breadcrumb area =======-->
+
+  <div class="breadcrumb-area breadcrumb-bg-1 pt-50 pb-70 mb-50">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <h1 class="breadcrumb-title">Edit Product</h1>
+
+          <!--=======  breadcrumb list  =======-->
+
+          <ul class="breadcrumb-list">
+            <li class="breadcrumb-list__item"><a href="index.html">Dashboard Admin</a></li>
+            <li class="breadcrumb-list__item breadcrumb-list__item--active">Edit Product</li>
+          </ul>
+
+          <!--=======  End of breadcrumb list  =======-->
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--=======  End of breadcrumb area =======-->
+
+      <!--=============================================
+  =            my account page content         =
+  =============================================-->
+
+  <div class="my-account-area mb-50 mb-md-70 mb-sm-70 mb-xs-70 mb-xxs-70">
+    <div class="container">
+        <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="myaccount-content">
+                    <div class="account-details-form">
+                        <div class="single-input-item">
+                            <div class="row" *ngFor="let produk of productlist">
+                                <div class="col-2">
+                                    <input type="file" (change)="fileProgress($event)" style="display: none" #fileInput formControlName="foto">
+                                    <div *ngIf="previewUrl">
+                                        <img [src]="previewUrl" width="150" (click)="fileInput.click()">   
+                                    </div>
+                                    <div *ngIf="!previewUrl && fotoedit1 == undefined">
+                                        <img src="../../assets/img/box-flat.png" width="150" (click)="fileInput.click()">
+                                    </div>
+                                    <div *ngIf="!previewUrl && fotoedit1 != undefined">
+                                        <img src="http://localhost:8000/fotoupload/{{fotoedit1}}" width="150" (click)="fileInput.click()">
+                                    </div>
+                                    <div *ngIf="fileUploadProgress">
+                                        Upload progress: {{ fileUploadProgress }}
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <input type="file" (change)="fileProgress2($event)" style="display: none" #fileInput2 formControlName="foto2">
+                                    <div *ngIf="previewUrl2">
+                                        <img [src]="previewUrl2" width="150" (click)="fileInput2.click()">   
+                                    </div>
+                                    <div *ngIf="!previewUrl2 && fotoedit2 == undefined">
+                                        <img src="../../assets/img/box-flat.png" width="150" (click)="fileInput2.click()">
+                                    </div>
+                                    <div *ngIf="!previewUrl2 && fotoedit2 != undefined">
+                                        <img src="http://localhost:8000/fotoupload/{{fotoedit2}}" width="150" (click)="fileInput2.click()">
+                                    </div>
+                                    <div *ngIf="fileUploadProgress2">
+                                        Upload progress: {{ fileUploadProgress2 }}
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <input type="file" (change)="fileProgress3($event)" style="display: none" #fileInput3 formControlName="foto3">
+                                    <div *ngIf="previewUrl3">
+                                        <img [src]="previewUrl3" width="150" (click)="fileInput3.click()">   
+                                    </div>
+                                    <div *ngIf="!previewUrl3 && fotoedit3 == undefined">
+                                        <img src="../../assets/img/box-flat.png" width="150" (click)="fileInput3.click()">
+                                    </div>
+                                    <div *ngIf="!previewUrl3 && fotoedit3 != undefined">
+                                        <img src="http://localhost:8000/fotoupload/{{fotoedit3}}" width="150" (click)="fileInput3.click()">
+                                    </div>
+                                    <div *ngIf="fileUploadProgress3">
+                                        Upload progress: {{ fileUploadProgress3 }}
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <input type="file" (change)="fileProgress4($event)" style="display: none" #fileInput4 formControlName="foto4">
+                                    <div *ngIf="previewUrl4">
+                                        <img [src]="previewUrl4" width="150" (click)="fileInput4.click()">   
+                                    </div>
+                                    <div *ngIf="!previewUrl4 && fotoedit4 == undefined">
+                                        <img src="../../assets/img/box-flat.png" width="150" (click)="fileInput4.click()">
+                                    </div>
+                                    <div *ngIf="!previewUrl4 && fotoedit4 != undefined">
+                                        <img src="http://localhost:8000/fotoupload/{{fotoedit4}}" width="150" (click)="fileInput4.click()">
+                                    </div>
+                                    <div *ngIf="fileUploadProgress4">
+                                        Upload progress: {{ fileUploadProgress4 }}
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <input type="file" (change)="fileProgress5($event)" style="display: none" #fileInput5 formControlName="foto5">
+                                    <div *ngIf="previewUrl5">
+                                        <img [src]="previewUrl5" width="150" (click)="fileInput5.click()">   
+                                    </div>
+                                    <div *ngIf="!previewUrl5 && fotoedit5 == undefined">
+                                        <img src="../../assets/img/box-flat.png" width="150" (click)="fileInput5.click()">
+                                    </div>
+                                    <div *ngIf="!previewUrl5 && fotoedit5 != undefined">
+                                        <img src="http://localhost:8000/fotoupload/{{fotoedit5}}" width="150" (click)="fileInput5.click()">
+                                    </div>
+                                    <div *ngIf="fileUploadProgress5">
+                                        Upload progress: {{ fileUploadProgress5 }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="single-input-item">
+                            <label for="kodeproduk" class="required">Kode Produk</label>
+                            <input type="hidden" [(ngModel)]="id" name="id" formControlName="id">
+                            <input type="text" [(ngModel)]="kodeproduk" name="kodeproduk" formControlName="kodeproduk" [ngClass]="{ 'is-invalid': submitted && f.kodeproduk.errors }">
+                            <div *ngIf="submitted && f.kodeproduk.errors" class="invalid-feedback">
+                                <div *ngIf="f.kodeproduk.errors.required">Kode Produk Wajib Diisi</div>
+                            </div>
+                        </div>
+                        <div class="single-input-item">
+                            <label for="namaproduk" class="required">Nama Produk</label>
+                            <input type="text" (keyup)="buatlink()" [(ngModel)]="namaproduk" id="namaproduk" name="namaproduk" formControlName="namaproduk" [ngClass]="{ 'is-invalid': submitted && f.namaproduk.errors }">
+                            <div *ngIf="submitted && f.namaproduk.errors" class="invalid-feedback">
+                                <div *ngIf="f.namaproduk.errors.required">Nama Produk Wajib Diisi</div>
+                            </div>
+                            <input type="hidden" [(ngModel)]="link" id="link" name="link" formControlName="link">
+                        </div>
+                        <div class="single-input-item">
+                            <label for="deskripsi" class="required">Deskripsi Produk</label>
+                            <input type="text" [(ngModel)]="deskripsi" name="deskripsi" formControlName="deskripsi" [ngClass]="{ 'is-invalid': submitted && f.deskripsi.errors }">
+                            <div *ngIf="submitted && f.deskripsi.errors" class="invalid-feedback">
+                                <div *ngIf="f.deskripsi.errors.required">Deskripsi Produk Wajib Diisi</div>
+                            </div>
+                        </div>
+                        <div class="single-input-item">
+                            <label for="hargabeli" class="required">Harga Beli</label>
+                            <input type="text" [(ngModel)]="hargabeli" name="hargabeli" formControlName="hargabeli" [ngClass]="{ 'is-invalid': submitted && f.hargabeli.errors }">
+                            <div *ngIf="submitted && f.hargabeli.errors" class="invalid-feedback">
+                                <div *ngIf="f.hargabeli.errors.required">Harga Beli Wajib Diisi</div>
+                            </div>
+                        </div>
+                        <div class="single-input-item">
+                            <label for="hargajual" class="required">Harga Jual</label>
+                            <input type="text" [(ngModel)]="hargajual" name="hargajual" formControlName="hargajual" [ngClass]="{ 'is-invalid': submitted && f.hargajual.errors }">
+                            <div *ngIf="submitted && f.hargajual.errors" class="invalid-feedback">
+                                <div *ngIf="f.hargajual.errors.required">Harga Jual Wajib Diisi</div>
+                            </div>
+                        </div>
+                        <div class="single-input-item">
+                            <label for="hargagrosir" class="required">Harga Grosir</label>
+                            <input type="text" [(ngModel)]="hargagrosir" name="hargagrosir" formControlName="hargagrosir">
+                        </div>
+                        <div class="single-input-item">
+                            <label for="stok" class="required">Stok Produk</label>
+                            <input type="text" [(ngModel)]="stok" name="stok" formControlName="stok" [ngClass]="{ 'is-invalid': submitted && f.stok.errors }">
+                            <div *ngIf="submitted && f.stok.errors" class="invalid-feedback">
+                                <div *ngIf="f.stok.errors.required">Stok Produk Wajib Diisi</div>
+                            </div>
+                        </div>
+                        <div class="single-input-item">
+                            <label for="berat" class="required">Berat (Kg)</label>
+                            <input type="text" [(ngModel)]="berat" name="berat" formControlName="berat" [ngClass]="{ 'is-invalid': submitted && f.berat.errors }">
+                            <div *ngIf="submitted && f.berat.errors" class="invalid-feedback">
+                                <div *ngIf="f.berat.errors.required">Berat Wajib Diisi</div>
+                            </div>
+                        </div>
+                        <div class="single-input-item">
+                            <button class="check-btn sqr-btn">Save Product</button>
+                          </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+  </div>

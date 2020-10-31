@@ -1,5 +1,5 @@
-<div *ngFor="let check of checkout" class="pt-50 pb-50">
-    <h3 align="center"><b><u>REKENING TRANSFER</u><br>BCA 12345678 a.n XXXXXXX </b></h3>
-    <p align="center">Sejumlah tepat beserta 3(tiga) digit angka terakhir. <br><h1>{{ check.subtotal | currency:"IDR":"Rp. "}}</h1>
+<div class="pt-50 pb-50">
+    <h3 align="center" *ngFor="let toko of profile"><b><u>REKENING TRANSFER</u><br>{{ toko.bank }} {{ toko.nomorrekening }} a.n {{ toko.namarekening }} </b></h3>
+    <p align="center">Sejumlah tepat beserta 3(tiga) digit angka terakhir. <br><h1>{{ subtotal | currency:"IDR":"Rp. "}}</h1>
     <br>Konfirmasi sistem otomatis maksimum 1 jam setelah transfer masuk.</p>
 </div>

@@ -7,16 +7,16 @@ import { HomeComponent, HomeFaqComponent } from './home/home.component';
 import { ProductComponent, ProductDetailComponent } from './product/product.component';
 import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent, CheckoutFinishComponent } from './checkout/checkout.component';
-import { ProfileComponent, ProfileAddressComponent } from './profile/profile.component';
+import { ProfileComponent, ProfileAddressComponent, ProfileAddProductComponent, ProfileEditProductComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 import { TransactionComponent } from './transaction/transaction.component';
 import { CategoryComponent } from './category/category.component';
 import { BlogComponent } from './blog/blog.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 
+import { HttpClientModule, HttpClientXsrfModule } from "@angular/common/http";
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HttpClientXsrfModule } from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import { HttpClientModule, HttpClientXsrfModule } from "@angular/common/http";
     ProductComponent, ProductDetailComponent,
     CartComponent,
     CheckoutComponent, CheckoutFinishComponent,
-    ProfileComponent, ProfileAddressComponent,
+    ProfileComponent, ProfileAddressComponent, ProfileAddProductComponent, ProfileEditProductComponent,
     RegisterComponent,
     TransactionComponent,
     CategoryComponent,
@@ -33,10 +33,10 @@ import { HttpClientModule, HttpClientXsrfModule } from "@angular/common/http";
     WishlistComponent
   ],
   imports: [
-    HttpModule,
-    FormsModule,
     BrowserModule,
     AppRoutingModule,
+    HttpModule,
+    FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     HttpClientXsrfModule.withOptions({

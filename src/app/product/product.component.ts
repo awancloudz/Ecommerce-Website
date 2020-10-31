@@ -8,6 +8,7 @@ import { CartArray } from '../cart/cartarray';
 import { CartService } from '../cart.service';
 import { ProfileArray } from '../profile/profilearray';
 import { AppComponent } from '../app.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-product',
@@ -122,6 +123,8 @@ export class ProductDetailComponent implements OnInit {
   productlist:ProductArray[]=[];
   cartlist:CartArray[]=[];
   profile:ProfileArray[]=[];
+  productForm: FormGroup;
+  submitted = false;
   constructor(public appcomp:AppComponent,public route:ActivatedRoute, public router:Router,public productservice:ProductService, public cartservice:CartService) { }
 
   ngOnInit() {
@@ -199,7 +202,7 @@ export class ProductDetailComponent implements OnInit {
     else{
       alert("Silahkan Login/Register terlebih dahulu!");
       //this.spinner.hide();
-      this.router.navigate(['profile']);
+      this.router.navigate(['register']);
     }
   }
   increment(){

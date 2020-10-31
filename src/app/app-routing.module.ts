@@ -4,7 +4,7 @@ import { HomeComponent, HomeFaqComponent } from './home/home.component';
 import { ProductComponent, ProductDetailComponent } from './product/product.component';
 import { CategoryComponent } from './category/category.component';
 import { BlogComponent } from './blog/blog.component';
-import { ProfileComponent, ProfileAddressComponent } from './profile/profile.component';
+import { ProfileComponent, ProfileAddressComponent, ProfileAddProductComponent, ProfileEditProductComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 import { CartComponent } from './cart/cart.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
@@ -20,6 +20,8 @@ const routes: Routes = [
   { path: 'faq', component: HomeFaqComponent },
   { path: 'product', component: ProductComponent },
   { path: 'product/:id', component: ProductDetailComponent },
+  { path: 'productadd', component: ProfileAddProductComponent },
+  { path: 'productedit/:id', component: ProfileEditProductComponent },
   { path: 'category', component: CategoryComponent },
   { path: 'blog', component: BlogComponent },
   { path: 'profile', component: ProfileComponent },

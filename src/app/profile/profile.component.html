@@ -3,7 +3,20 @@
   <div class="breadcrumb-area breadcrumb-bg-1 pt-50 pb-70 mb-50">
     <div class="container">
       <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-12" *ngIf="role == 'admin'">
+          <h1 class="breadcrumb-title">Dashboard Admin</h1>
+
+          <!--=======  breadcrumb list  =======-->
+
+          <ul class="breadcrumb-list">
+            <li class="breadcrumb-list__item"><a href="index.html">HOME</a></li>
+            <li class="breadcrumb-list__item breadcrumb-list__item--active">Dashboard Admin</li>
+          </ul>
+
+          <!--=======  End of breadcrumb list  =======-->
+
+        </div>
+        <div class="col-lg-12" *ngIf="role == 'customer'">
           <h1 class="breadcrumb-title">My Account</h1>
 
           <!--=======  breadcrumb list  =======-->
@@ -32,7 +45,15 @@
         <div class="col-lg-12">
           <div class="row">
             <div class="col-lg-12 col-md-12">
-              <div class="myaccount-tab-menu nav" role="tablist">
+              <div class="myaccount-tab-menu nav" role="tablist" *ngIf="role == 'admin'">
+                <a href="#admindashboad" class="active" data-toggle="tab">
+                  Dashboard</a>
+                <a href="#adminproduct" data-toggle="tab"> Produk</a>
+                <a href="#adminorders" data-toggle="tab"> Penjualan</a>
+                <a href="#admincustomer" data-toggle="tab"> Customer</a>
+                <a href="#adminstore" data-toggle="tab"> Profile Toko</a>
+              </div>
+              <div class="myaccount-tab-menu nav" role="tablist" *ngIf="role == 'customer'">
                 <a href="#dashboad" class="active" data-toggle="tab">
                   Dashboard</a>
                 <a href="#orders" data-toggle="tab"> Transaksi</a>
@@ -47,7 +68,181 @@
             <!-- My Account Tab Menu End -->
             <!-- My Account Tab Content Start -->
             <div class="col-lg-12 col-md-12">
-              <div class="tab-content" id="myaccountContent">
+              <div class="tab-content" id="myaccountContent" *ngIf="role == 'admin'">
+                <!-- Single Tab Content Start -->
+                <div class="tab-pane fade show active" id="admindashboad" role="tabpanel">
+                  <div class="myaccount-content" >
+                    <h3>Dashboard</h3>
+                    <div class="welcome">
+                      <p>Hi, <strong>Admin</strong></p>
+                    </div>
+
+                    <p class="mb-0">From your account dashboard. you can easily check & view your recent orders, manage
+                      your
+                      shipping and billing addresses and edit your password and account details.</p>
+                  </div>
+                </div>
+                <!-- Single Tab Content End -->
+                <!-- Single Tab Content Start -->
+                <div class="tab-pane fade" id="adminorders" role="tabpanel">
+                  <div class="myaccount-content">
+                    <h3>Penjualan</h3>
+                    <div class="single-input-item">
+                      <input type="text" placeholder="  Cari No.Order" [(ngModel)]="txtcariorder" name="txtcariorder">
+                    </div><br>
+                    <div class="myaccount-table table-responsive text-center">
+                      <table class="table table-bordered">
+                        <thead class="thead-light">
+                          <tr>
+                            <th>No.Order</th>
+                            <th>Tanggal</th>
+                            <th>Total Belanja</th>
+                            <th>Action</th>
+                            <th>&nbsp;</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let order of transactionlist">
+                            <td><a [routerLink]="['/transaction/', order.id]">{{ order.kodetransaksi }}</a></td>
+                            <td>{{ order.tanggal | date: 'dd-M-yyyy'}}</td>
+                            <td>{{ order.subtotal | currency:"IDR":""}}</td>
+                            <td *ngIf="order.status == 'order'"><a class="btn btn-success" style="color:white;" (click)="konfirmasipesanan(order)">Konfirmasi Pesanan</a></td>
+                            <td *ngIf="order.status == 'proses'">
+                              <a class="btn btn-primary" style="color:white;">Kirim Pesanan</a>
+                            </td>
+                            <td *ngIf="order.status == 'kirim'"><a class="btn btn-warning" style="color:white;">Sedang Dikirim</a></td>
+                            <td *ngIf="order.status == 'selesai'"><a class="btn btn-danger" style="color:white;">Selesai</a></td>
+                            <td><a [routerLink]="['/transaction/', order.id]">Detail</a></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <!-- Single Tab Content End -->
+                <!-- Single Tab Content Start -->
+                <div class="tab-pane fade" id="adminproduct" role="tabpanel">
+                  <div class="myaccount-content">
+                    <h3>Produk <a class="btn-sm btn-primary" [routerLink]="['/productadd']"><i class="fa fa-plus"></i> Tambah Produk</a></h3>
+                    <div class="single-input-item">
+                      <input type="text" placeholder="Cari Kode/Nama Produk" [(ngModel)]="txtcariproduk" name="txtcariproduk">
+                    </div><br>
+                    <div class="myaccount-table table-responsive text-center">
+                      <div class="cart-table-container">
+                        <table class="cart-table">
+                          <thead>
+                            <tr>
+                              <th class="product-name" colspan="2">Produk</th>
+                              <th class="product-price">Harga</th>
+                              <th class="product-quantity">Stok</th>
+                              <th class="product-remove">&nbsp;</th>
+                            </tr>
+                          </thead>
+            
+                          <tbody>
+                            <tr *ngFor="let product of productlist">
+                              <td class="product-thumbnail">
+                                <a href="product/{{ product.link }}">
+                                  <img src="http://localhost:8000/fotoupload/{{ product.foto }}" class="img-fluid" alt="">
+                                </a>
+                              </td>
+                              <td class="product-name">
+                                <a href="product/{{ product.link }}">{{ product.namaproduk }}</a>
+                              </td>
+            
+                              <td class="product-price"><span class="price">Rp.{{ product.hargajual | currency:"IDR":""}}</span></td>
+            
+                              <td class="product-quantity">
+                                <div class="pro-qty d-inline-block mx-0">
+                                  <input type="text" value="1">
+                                </div>
+                              </td>
+
+                              <td class="product-remove">
+                                <a href="productedit/{{ product.link }}">
+                                  <i class="ion-edit"></i>
+                                </a>
+                                <a (click)="delproduct(product)">
+                                  <i class="ion-android-close"></i>
+                                </a>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>            
+                    </div>
+                  </div>
+                </div>
+                <!-- Single Tab Content End -->
+                <!-- Single Tab Content Start -->
+                <div class="tab-pane fade" id="admincustomer" role="tabpanel">
+                  <div class="myaccount-content">
+                    <h3>Customer</h3>
+                    <div class="myaccount-table table-responsive text-center">
+                      <table class="table table-bordered">
+                        <thead class="thead-light">
+                          <tr>
+                            <th>Nama</th>
+                            <th>Email</th>
+                            <th>No.HP</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of items">
+                            <td *ngIf="item.role == 'customer'">{{ item.nama }}</td>
+                            <td *ngIf="item.role == 'customer'">{{ item.email }}</td>
+                            <td *ngIf="item.role == 'customer'">{{ item.nohp }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <!-- Single Tab Content End -->
+                <!-- Single Tab Content Start -->
+                <div class="tab-pane fade" id="adminstore" role="tabpanel">
+                  <div class="myaccount-content">
+                    <h3>Profile Toko</h3>
+                    <div class="account-details-form">
+                      <form action="#">
+                        <div class="single-input-item">
+                          <label for="nama" class="required">Nama Toko</label>
+                          <input type="hidden" [(ngModel)]="id" name="id">
+                          <input type="text" placeholder="Nama" [(ngModel)]="nama" name="nama">
+                        </div>
+                        <div class="single-input-item">
+                          <label for="alamat" class="required">Alamat</label>
+                          <input type="text" placeholder="Alamat" [(ngModel)]="alamat" name="alamat">
+                        </div>
+                        <div class="single-input-item">
+                          <label for="kota" class="required">Kota/Kabupaten</label>
+                          <input type="text" placeholder="Kota/Kabupaten" [(ngModel)]="kota" name="kota">
+                        </div>
+                        <div class="single-input-item">
+                          <label for="nohp" class="required">No.Handphone</label>
+                          <input type="text" placeholder="No.Handphone" [(ngModel)]="nohp" name="nohp">
+                        </div>
+                        <div class="single-input-item">
+                          <label for="bank" class="required">Nama Bank</label>
+                          <input type="text" placeholder="Nama Bank" [(ngModel)]="bank" name="bank">
+                        </div>
+                        <div class="single-input-item">
+                          <label for="namarekening" class="required">Nama Rekening</label>
+                          <input type="text" placeholder="Nama Rekening" [(ngModel)]="namarekening" name="namarekening">
+                        </div>
+                        <div class="single-input-item">
+                          <label for="nomorrekening" class="required">Nomor Rekening</label>
+                          <input type="text" placeholder="Nomor Rekening" [(ngModel)]="nomorrekening" name="nomorrekening">
+                        </div>
+                        <div class="single-input-item">
+                          <button class="check-btn sqr-btn" (click)="savebuttonstore()">Save Changes</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div> <!-- Single Tab Content End -->
+              </div>
+              <div class="tab-content" id="myaccountContent" *ngIf="role == 'customer'">
                 <!-- Single Tab Content Start -->
                 <div class="tab-pane fade show active" id="dashboad" role="tabpanel">
                   <div class="myaccount-content" *ngFor="let item of items">
@@ -83,7 +278,7 @@
                             <td>{{ order.tanggal | date: 'dd-M-yyyy'}}</td>
                             <td>{{ order.subtotal | currency:"IDR":""}}</td>
                             <td *ngIf="order.status == 'order'"><a class="btn btn-success" style="color:white;">Menunggu Konfirmasi</a></td>
-                            <td *ngIf="order.status == 'siap'"><a class="btn btn-warning" style="color:white;">Proses Packing</a></td>
+                            <td *ngIf="order.status == 'proses'"><a class="btn btn-warning" style="color:white;">Proses Packing</a></td>
                             <td *ngIf="order.status == 'kirim'"><a class="btn btn-primary" style="color:white;">Sedang Dikirim</a></td>
                             <td *ngIf="order.status == 'selesai'"><a class="btn btn-danger" style="color:white;">Selesai</a></td>
                             <td><a [routerLink]="['/transaction/', order.id]">View</a></td>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 //Profile Array
 import { ProfileArray } from '../app/profile/profilearray';
 import { ProfileAddressArray } from '../app/profile/profileaddressarray';
+import { ProfileStoreArray } from '../app/profile/profilestorearray';
 //HTTP Response
 //Tambahkan Response,Request,Header
 import { Http,Response,RequestOptions,Headers } from '@angular/http';
@@ -17,8 +18,15 @@ export class ProfileService {
   private url:string="http://localhost:8000/userlogin";
   private url2:string="http://localhost:8000/citylist";
   private url3:string="http://localhost:8000/user";
+  private url4:string="http://localhost:8000/profile";
   constructor(public http: Http){ 
     
+  }
+  showprofile()
+  {
+    return this.http.get(this.url4).pipe(
+      map((response:Response)=>response.json())
+    );
   }
   loginuser(item:ProfileArray)
   {
@@ -51,6 +59,14 @@ export class ProfileService {
     let headers = new Headers({ 'Content-Type': 'application/json'});
     let options = new RequestOptions({ headers: headers, withCredentials: true });
     return this.http.put(this.url3,
+                  body, options)
+                 .pipe(map((response:Response)=>response.json()));
+  }
+  updatestore(item:ProfileStoreArray){
+    let body = JSON.stringify(item);
+    let headers = new Headers({ 'Content-Type': 'application/json'});
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
+    return this.http.put(this.url4,
                   body, options)
                  .pipe(map((response:Response)=>response.json()));
   }

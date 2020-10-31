@@ -584,7 +584,7 @@
   
         <div class="offcanvas-cart-content-container">
           <h3 class="cart-title"><b>Keranjang Belanja</b></h3>
-          <div class="cart-product-wrapper" *ngIf="loginstatus != null && cartlist.koleksi2[0].jumlahkeranjang > 0">
+          <div class="cart-product-wrapper" *ngIf="loginstatus != null && jumlahcart > 0">
             <div class="cart-product-container ps-scroll">
               <!--=======  single cart product  =======-->
               <div class="single-cart-product" *ngFor="let cart of cartlist.koleksi">
@@ -593,7 +593,7 @@
                 </span>
                 <div class="image">
                   <a href="product/{{ cart.produk.link }}">
-                    <img src="assets/images/products/{{ cart.produk.foto }}" class="img-fluid" alt="">
+                    <img src="http://localhost:8000/fotoupload/{{ cart.produk.foto }}" class="img-fluid" alt="">
                   </a>
                 </div>
                 <div class="content">
@@ -633,7 +633,7 @@
   
             <!--=======  End of free shipping text  =======-->
           </div>
-          <div class="cart-product-wrapper" *ngIf="loginstatus != null && cartlist.koleksi2[0].jumlahkeranjang == 0">
+          <div class="cart-product-wrapper" *ngIf="loginstatus != null && jumlahcart == 0">
             <p align="center">[ Keranjang Masih Kosong! ]</p>
             <div class="cart-buttons" align="center">
               <a href="product">Belanja</a>

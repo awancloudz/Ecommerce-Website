@@ -29,4 +29,27 @@ export class ProductService {
       map((response:Response)=>response.json())
     );
   }
+  saveproduct(item:ProductArray){
+    let body = JSON.stringify(item);
+    let headers = new Headers({ 'Content-Type': 'application/json'});
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
+    return this.http.post(this.url,
+                  body, options)
+                 .pipe(map((response:Response)=>response.json()));
+  }
+  editproduct(item:ProductArray){
+    let body = JSON.stringify(item);
+    let headers = new Headers({ 'Content-Type': 'application/json'});
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
+    return this.http.put(this.url,
+                  body, options)
+                 .pipe(map((response:Response)=>response.json()));
+  }
+  deleteproduct(item){
+    let headers = new Headers({ 'Content-Type': 'application/json'});
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
+    return this.http.delete(this.url + "/hapus/" + item.id,
+                  options)
+                 .pipe(map((response:Response)=>response.json()));
+  }
 }
