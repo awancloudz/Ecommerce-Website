@@ -1,6 +1,6 @@
   <!--=======  breadcrumb area =======-->
 
-  <div class="breadcrumb-area breadcrumb-bg-1 pt-50 pb-70 mb-50">
+  <div class="breadcrumb-area breadcrumb-bg-1 pt-10 pb-10 mb-20">
     <div class="container">
       <div class="row">
         <div class="col-lg-12" *ngIf="role == 'admin'">
@@ -46,12 +46,13 @@
           <div class="row">
             <div class="col-lg-12 col-md-12">
               <div class="myaccount-tab-menu nav" role="tablist" *ngIf="role == 'admin'">
-                <a href="#admindashboad" class="active" data-toggle="tab">
-                  Dashboard</a>
-                <a href="#adminproduct" data-toggle="tab"> Produk</a>
-                <a href="#adminorders" data-toggle="tab"> Penjualan</a>
-                <a href="#admincustomer" data-toggle="tab"> Customer</a>
-                <a href="#adminstore" data-toggle="tab"> Profile Toko</a>
+                <a href="#admindashboard" class="active" data-toggle="tab">Dashboard</a>
+                <a href="#adminslide" data-toggle="tab">Slide</a>
+                <a href="#admincategory" data-toggle="tab">Kategori</a>
+                <a href="#adminproduct" data-toggle="tab">Produk</a>
+                <a href="#adminorders" data-toggle="tab">Penjualan</a>
+                <a href="#admincustomer" data-toggle="tab">Customer</a>
+                <a href="#adminstore" data-toggle="tab">Profile Toko</a>
               </div>
               <div class="myaccount-tab-menu nav" role="tablist" *ngIf="role == 'customer'">
                 <a href="#dashboad" class="active" data-toggle="tab">
@@ -70,7 +71,7 @@
             <div class="col-lg-12 col-md-12">
               <div class="tab-content" id="myaccountContent" *ngIf="role == 'admin'">
                 <!-- Single Tab Content Start -->
-                <div class="tab-pane fade show active" id="admindashboad" role="tabpanel">
+                <div class="tab-pane fade show active" id="admindashboard" role="tabpanel">
                   <div class="myaccount-content" >
                     <h3>Dashboard</h3>
                     <div class="welcome">
@@ -84,12 +85,77 @@
                 </div>
                 <!-- Single Tab Content End -->
                 <!-- Single Tab Content Start -->
+                <div class="tab-pane fade" id="adminslide" role="tabpanel">
+                  <div class="myaccount-content" >
+                    <h3>Slide</h3>
+                  </div>
+                </div>
+                <!-- Single Tab Content End -->
+                <!-- Single Tab Content Start -->
+                <div class="tab-pane fade" id="admincategory" role="tabpanel">
+                  <div class="myaccount-content" >
+                    <h3>Kategori Produk</h3>
+                    <div class="row">
+                      <div class="col-2"><a class="btn-sm btn-primary" [routerLink]="['/categoryadd']"><i class="fa fa-plus"></i> Tambah Kategori</a></div>
+                      <div class="col-4">
+                        <div class="search-widget">
+                          <input type="search" placeholder="Cari Kategori Produk" [(ngModel)]="txtcarikategori" name="txtcarikategori">
+                          <button type="button"><i class="ion-android-search"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="myaccount-table table-responsive text-center">
+                      <div class="cart-table-container">
+                        <table class="cart-table">
+                          <thead>
+                            <tr>
+                              <th class="product-name"></th>
+                              <th class="product-name">Nama Kategori</th>
+                              <th class="product-remove">&nbsp;</th>
+                            </tr>
+                          </thead>
+            
+                          <tbody>
+                            <tr *ngFor="let cat of categorylist">
+                              <td class="product-thumbnail">
+                                <a href="category/{{ cat.link }}">
+                                  <img src="http://localhost:8000/fotoupload/{{ cat.foto }}" class="img-fluid" alt="">
+                                </a>
+                              </td>
+                              <td class="product-name">
+                                <a href="category/{{ cat.link }}">{{ cat.nama }}</a>
+                              </td>
+
+                              <td class="product-remove">
+                                <a href="categoryedit/{{ cat.link }}">
+                                  <i class="ion-edit"></i>
+                                </a>
+                                <a (click)="delcategory(cat)">
+                                  <i class="ion-android-close"></i>
+                                </a>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>            
+                    </div>
+                  </div>
+                </div>
+                <!-- Single Tab Content End -->
+                <!-- Single Tab Content Start -->
                 <div class="tab-pane fade" id="adminorders" role="tabpanel">
                   <div class="myaccount-content">
                     <h3>Penjualan</h3>
-                    <div class="single-input-item">
-                      <input type="text" placeholder="  Cari No.Order" [(ngModel)]="txtcariorder" name="txtcariorder">
-                    </div><br>
+                    <div class="row">
+                      <div class="col-4">
+                        <div class="search-widget">
+                          <input type="search" placeholder="Cari No.Order" [(ngModel)]="txtcariorder" name="txtcariorder">
+                          <button type="button"><i class="ion-android-search"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                    <br>
                     <div class="myaccount-table table-responsive text-center">
                       <table class="table table-bordered">
                         <thead class="thead-light">
@@ -123,10 +189,23 @@
                 <!-- Single Tab Content Start -->
                 <div class="tab-pane fade" id="adminproduct" role="tabpanel">
                   <div class="myaccount-content">
-                    <h3>Produk <a class="btn-sm btn-primary" [routerLink]="['/productadd']"><i class="fa fa-plus"></i> Tambah Produk</a></h3>
-                    <div class="single-input-item">
-                      <input type="text" placeholder="Cari Kode/Nama Produk" [(ngModel)]="txtcariproduk" name="txtcariproduk">
-                    </div><br>
+                    <h3>Produk</h3>
+                    <div class="row">
+                      <div class="col-2"><a class="btn-sm btn-primary" [routerLink]="['/productadd']"><i class="fa fa-plus"></i> Tambah Produk</a></div>
+                      <div class="col-4">
+                        <div class="search-widget">
+                          <input type="search" placeholder="Cari Kode/Nama Produk" [(ngModel)]="txtcariproduk" name="txtcariproduk">
+                          <button type="button"><i class="ion-android-search"></i></button>
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <!--class="nice-select"
+                        <select [(ngModel)]="id_kategoriproduk" name="id_kategoriproduk" formControlName="id_kategoriproduk">
+                          <option *ngFor="let cat of categorylist" value="{{ cat.id }}">{{ cat.nama }}</option>
+                        </select>-->
+                      </div>
+                    </div>
+                    <br>
                     <div class="myaccount-table table-responsive text-center">
                       <div class="cart-table-container">
                         <table class="cart-table">
@@ -178,6 +257,14 @@
                 <div class="tab-pane fade" id="admincustomer" role="tabpanel">
                   <div class="myaccount-content">
                     <h3>Customer</h3>
+                    <div class="row">
+                      <div class="col-4">
+                        <div class="search-widget">
+                          <input type="search" placeholder="Cari Customer" [(ngModel)]="txtcaricustomer" name="txtcaricustomer">
+                          <button type="button"><i class="ion-android-search"></i></button>
+                        </div>
+                      </div>
+                    </div><br>
                     <div class="myaccount-table table-responsive text-center">
                       <table class="table table-bordered">
                         <thead class="thead-light">

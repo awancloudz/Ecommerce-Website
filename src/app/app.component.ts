@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { CartArray } from '../app/cart/cartarray';
 import { CartService } from '../app/cart.service';
 import { ProfileArray } from '../app/profile/profilearray';
+import { ProfileStoreArray } from '../app/profile/profilestorearray';
+import { ProfileService } from '../app/profile.service';
 import { Router } from '@angular/router';
 declare var $:any;
 declare var jquery:any;
@@ -15,16 +17,31 @@ export class AppComponent {
   loginstatus = localStorage.getItem('loginstatus');
   cartlist:any;
   profile:ProfileArray[]=[];
+  profilestore:ProfileStoreArray[]=[];
   title = 'EcommerceWebsite';
   jumlahcart:any;
   loadAPI: Promise<any>;
-
-  constructor(public cartservice:CartService, public router:Router) {        
+  storename:any;
+  constructor(public profileservice:ProfileService,public cartservice:CartService, public router:Router) {        
       this.loadAPI = new Promise((resolve) => {
           this.loadScript();
           resolve(true);
       });
       this.showcart();
+      this.profileservice.showprofile().subscribe(
+        //Jika data sudah berhasil di load
+        (data)=>{
+          for(var key in data){
+            this.storename = data[key].nama;
+          }
+        },
+        //Jika Error
+        function (error){   
+        },
+        //Tutup Loading
+        function(){
+        }
+      );
   }
 
   public loadScript() {        

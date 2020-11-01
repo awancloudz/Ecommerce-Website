@@ -9,8 +9,7 @@
 					<!--=======  breadcrumb list  =======-->
 
 					<ul class="breadcrumb-list">
-						<li class="breadcrumb-list__item"><a href="index.html">HOME</a></li>
-						<li class="breadcrumb-list__item"><a href="#">ELEMENTS</a></li>
+						<li class="breadcrumb-list__item"><a href="#">HOME</a></li>
 						<li class="breadcrumb-list__item breadcrumb-list__item--active">PRODUCT CATEGORIES</li>
 					</ul>
 
@@ -51,14 +50,14 @@
 	<div class="product-category-container mb-50 mb-md-90 mb-sm-90">
 		<div class="container wide">
 			<div class="row">
-				<div class="col-lg-3 col-md-6 col-12">
+				<div class="col-lg-3 col-md-6 col-12" *ngFor="let cat of categorylist">
 					<!--=======  single category  =======-->
 
 					<div class="single-category single-category--one wow zoomIn">
 						<!--=======  single category image  =======-->
 
 						<div class="single-category__image single-category__image--one">
-							<img src="assets/images/category/category-women.jpg" class="img-fluid" alt="">
+							<img src="http://localhost:8000/fotoupload/{{ cat.foto }}" class="img-fluid" alt="">
 						</div>
 
 						<!--=======  End of single category image  =======-->
@@ -67,8 +66,8 @@
 
 						<div class="single-category__content single-category__content--one mt-25 mb-25">
 							<div class="title">
-								<p>Women</p>
-								<a href="shop-left-sidebar.html">+ Online store</a>
+								<p>{{ cat.nama }}</p>
+								<a href="category/{{ cat.link }}">+ View Category</a>
 							</div>
 
 							<p class="product-count">999</p>
@@ -78,110 +77,7 @@
 
 						<!--=======  banner-link  =======-->
 
-						<a href="shop-left-sidebar.html" class="banner-link"></a>
-
-						<!--=======  End of banner-link  =======-->
-					</div>
-
-					<!--=======  End of single category  =======-->
-				</div>
-				<div class="col-lg-3 col-md-6 col-12">
-					<!--=======  single category  =======-->
-
-					<div class="single-category single-category--one wow zoomIn">
-						<!--=======  single category content  =======-->
-
-						<div class="single-category__content single-category__content--one mt-25 mb-25">
-							<div class="title">
-								<p>Shoes</p>
-								<a href="shop-left-sidebar.html">+ Online store</a>
-							</div>
-
-							<p class="product-count">2</p>
-						</div>
-
-						<!--=======  End of single category content  =======-->
-
-						<!--=======  single category image  =======-->
-
-						<div class="single-category__image single-category__image--one">
-							<img src="assets/images/category/category-shoes.jpg" class="img-fluid" alt="">
-						</div>
-
-						<!--=======  End of single category image  =======-->
-
-
-						<!--=======  banner-link  =======-->
-
-						<a href="shop-left-sidebar.html" class="banner-link"></a>
-
-						<!--=======  End of banner-link  =======-->
-					</div>
-
-					<!--=======  End of single category  =======-->
-				</div>
-				<div class="col-lg-3 col-md-6 col-12">
-					<!--=======  single category  =======-->
-
-					<div class="single-category single-category--one wow zoomIn">
-						<!--=======  single category image  =======-->
-
-						<div class="single-category__image single-category__image--one">
-							<img src="assets/images/category/category-bags.jpg" class="img-fluid" alt="">
-						</div>
-
-						<!--=======  End of single category image  =======-->
-
-						<!--=======  single category content  =======-->
-
-						<div class="single-category__content single-category__content--one mt-25 mb-25">
-							<div class="title">
-								<p>Bags</p>
-								<a href="shop-left-sidebar.html">+ Online store</a>
-							</div>
-
-							<p class="product-count">6</p>
-						</div>
-
-						<!--=======  End of single category content  =======-->
-
-						<!--=======  banner-link  =======-->
-
-						<a href="shop-left-sidebar.html" class="banner-link"></a>
-
-						<!--=======  End of banner-link  =======-->
-					</div>
-
-					<!--=======  End of single category  =======-->
-				</div>
-				<div class="col-lg-3 col-md-6 col-12">
-					<!--=======  single category  =======-->
-
-					<div class="single-category single-category--one wow zoomIn">
-						<!--=======  single category content  =======-->
-
-						<div class="single-category__content single-category__content--one mt-25 mb-25">
-							<div class="title">
-								<p>Men</p>
-								<a href="shop-left-sidebar.html">+ Online store</a>
-							</div>
-
-							<p class="product-count">8</p>
-						</div>
-
-						<!--=======  End of single category content  =======-->
-						<!--=======  single category image  =======-->
-
-						<div class="single-category__image single-category__image--one">
-							<img src="assets/images/category/category-men.jpg" class="img-fluid" alt="">
-						</div>
-
-						<!--=======  End of single category image  =======-->
-
-
-						<!--=======  banner-link  =======-->
-
-						<a href="shop-left-sidebar.html" class="banner-link"></a>
+						<a href="category/{{ cat.link }}" class="banner-link"></a>
 
 						<!--=======  End of banner-link  =======-->
 					</div>
@@ -244,14 +140,14 @@
 						{"breakpoint":479, "settings": {"slidesToShow": 1, "arrows": false} }
 					]'>
 
-						<div class="col">
+						<div class="col" *ngFor="let cat of categorylist">
 							<!--=======  single category  =======-->
 
 							<div class="single-category single-category--two">
 								<!--=======  single category image  =======-->
 
 								<div class="single-category__image single-category__image--two">
-									<img src="assets/images/category/sunglasses.jpg" class="img-fluid" alt="">
+									<img src="http://localhost:8000/fotoupload/{{ cat.foto }}" class="img-fluid" alt="">
 								</div>
 
 								<!--=======  End of single category image  =======-->
@@ -260,7 +156,7 @@
 
 								<div class="single-category__content single-category__content--two mt-25">
 									<div class="title">
-										<a href="shop-left-sidebar.html">Sunglasses</a>
+										<a href="{{ cat.link }}">{{ cat.nama }}</a>
 									</div>
 
 									<p class="product-count">8</p>
@@ -271,147 +167,7 @@
 
 								<!--=======  banner-link  =======-->
 
-								<a href="shop-left-sidebar.html" class="banner-link"></a>
-
-								<!--=======  End of banner-link  =======-->
-							</div>
-
-							<!--=======  End of single category  =======-->
-						</div>
-
-						<div class="col">
-							<!--=======  single category  =======-->
-
-							<div class="single-category single-category--two">
-								<!--=======  single category image  =======-->
-
-								<div class="single-category__image single-category__image--two">
-									<img src="assets/images/category/women.jpg" class="img-fluid" alt="">
-								</div>
-
-								<!--=======  End of single category image  =======-->
-
-								<!--=======  single category content  =======-->
-
-								<div class="single-category__content single-category__content--two mt-25">
-									<div class="title">
-										<a href="shop-left-sidebar.html">Women</a>
-									</div>
-
-									<p class="product-count">6</p>
-								</div>
-
-								<!--=======  End of single category content  =======-->
-
-
-								<!--=======  banner-link  =======-->
-
-								<a href="shop-left-sidebar.html" class="banner-link"></a>
-
-								<!--=======  End of banner-link  =======-->
-							</div>
-
-							<!--=======  End of single category  =======-->
-						</div>
-
-						<div class="col">
-							<!--=======  single category  =======-->
-
-							<div class="single-category single-category--two">
-								<!--=======  single category image  =======-->
-
-								<div class="single-category__image single-category__image--two">
-									<img src="assets/images/category/cat-look-book.jpg" class="img-fluid" alt="">
-								</div>
-
-								<!--=======  End of single category image  =======-->
-
-								<!--=======  single category content  =======-->
-
-								<div class="single-category__content single-category__content--two mt-25">
-									<div class="title">
-										<a href="shop-left-sidebar.html">Lookbook</a>
-									</div>
-
-									<p class="product-count">10</p>
-								</div>
-
-								<!--=======  End of single category content  =======-->
-
-
-								<!--=======  banner-link  =======-->
-
-								<a href="shop-left-sidebar.html" class="banner-link"></a>
-
-								<!--=======  End of banner-link  =======-->
-							</div>
-
-							<!--=======  End of single category  =======-->
-						</div>
-
-						<div class="col">
-							<!--=======  single category  =======-->
-
-							<div class="single-category single-category--two">
-								<!--=======  single category image  =======-->
-
-								<div class="single-category__image single-category__image--two">
-									<img src="assets/images/category/men.jpg" class="img-fluid" alt="">
-								</div>
-
-								<!--=======  End of single category image  =======-->
-
-								<!--=======  single category content  =======-->
-
-								<div class="single-category__content single-category__content--two mt-25">
-									<div class="title">
-										<a href="shop-left-sidebar.html">Men</a>
-									</div>
-
-									<p class="product-count">12</p>
-								</div>
-
-								<!--=======  End of single category content  =======-->
-
-
-								<!--=======  banner-link  =======-->
-
-								<a href="shop-left-sidebar.html" class="banner-link"></a>
-
-								<!--=======  End of banner-link  =======-->
-							</div>
-
-							<!--=======  End of single category  =======-->
-						</div>
-
-						<div class="col">
-							<!--=======  single category  =======-->
-
-							<div class="single-category single-category--two">
-								<!--=======  single category image  =======-->
-
-								<div class="single-category__image single-category__image--two">
-									<img src="assets/images/category/shoes.jpg" class="img-fluid" alt="">
-								</div>
-
-								<!--=======  End of single category image  =======-->
-
-								<!--=======  single category content  =======-->
-
-								<div class="single-category__content single-category__content--two mt-25">
-									<div class="title">
-										<a href="shop-left-sidebar.html">Shoes</a>
-									</div>
-
-									<p class="product-count">15</p>
-								</div>
-
-								<!--=======  End of single category content  =======-->
-
-
-								<!--=======  banner-link  =======-->
-
-								<a href="shop-left-sidebar.html" class="banner-link"></a>
+								<a href="{{ cat.link }}" class="banner-link"></a>
 
 								<!--=======  End of banner-link  =======-->
 							</div>

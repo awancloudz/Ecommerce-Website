@@ -155,7 +155,7 @@
                 <div class="single-product__image">
                   <a class="image-wrap" href="product/{{ product.link }}">
                     <img src="http://localhost:8000/fotoupload/{{ product.foto }}" class="img-fluid" alt="">
-                    <img src="http://localhost:8000/fotoupload/hover-{{ product.foto }}" class="img-fluid" alt="">
+                    <img src="http://localhost:8000/fotoupload/{{ product.fotoproduk[1].foto }}" class="img-fluid" alt="">
                   </a>
 
                   <div class="single-product__floating-badges">
@@ -278,7 +278,7 @@
 
           <div class="row">
             <div class="col-lg-12 text-center mb-25 mt-30 mt-sm-20">
-              <a class="lezada-loadmore-button" href="shop"><i class="ion-ios-plus-empty"></i> LOAD MORE ...</a>
+              <a class="lezada-loadmore-button" href="product"><i class="ion-ios-plus-empty"></i> LOAD MORE ...</a>
             </div>
           </div>
         </div>

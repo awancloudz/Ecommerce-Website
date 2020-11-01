@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
     //this.spinner.show();
     this.productservice.showproduct().subscribe(
       //Jika data sudah berhasil di load
-      (data:ProductArray[])=>{
+      (data)=>{
         this.productlist=data;
         //this.spinner.hide();
       },

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 //Product Service
+import { CategoryService } from '../category.service'
 import { ProductService } from '../product.service'
 //Product Array
 import { ProductArray } from '../product/productarray';
+import { CategoryArray } from '../category/categoryarray';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CartArray } from '../cart/cartarray';
 import { CartService } from '../cart.service';
@@ -25,7 +27,8 @@ export class ProductComponent implements OnInit {
   productlist:ProductArray[]=[];
   cartlist:CartArray[]=[];
   profile:ProfileArray[]=[];
-  constructor(public appcomp:AppComponent,public productservice:ProductService, public cartservice:CartService, public router:Router) { }
+  categorylist:CategoryArray[]=[];
+  constructor(public appcomp:AppComponent,public categoryservice:CategoryService,public productservice:ProductService, public cartservice:CartService, public router:Router) { }
 
   ngOnInit(){
     window.scrollTo(0, 0);
@@ -44,6 +47,20 @@ export class ProductComponent implements OnInit {
       }
     );
 
+    this.categoryservice.showcategory().subscribe(
+      //Jika data sudah berhasil di load
+      (data:CategoryArray[])=>{
+        this.categorylist=data;
+        //this.spinner.hide();
+      },
+      //Jika Error
+      function (error){   
+      },
+      //Tutup Loading
+      function(){
+      }
+    );
+    
     if(this.loginstatus != null){
       this.profile = JSON.parse(localStorage.getItem("editprofile"));
       var iduser = this.profile[0]['id'];
