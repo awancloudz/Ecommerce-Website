@@ -6,6 +6,7 @@ import { CheckoutService } from '../checkout.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProfileService } from '../profile.service';
+import { ProfileStoreArray } from '../profile/profilestorearray';
 
 @Component({
   selector: 'app-transaction',
@@ -16,6 +17,7 @@ export class TransactionComponent implements OnInit {
   loginstatus = localStorage.getItem('loginstatus');
   transactionlist:CheckoutArray[]=[];
   detaillist:CheckoutArray[]=[];
+  profile:ProfileStoreArray[]=[];
   id_city:any;
   namakota:any;
   namaprovinsi:any;
@@ -68,6 +70,20 @@ export class TransactionComponent implements OnInit {
         (data:CheckoutArray[])=>{
           this.detaillist=data;
           //this.spinner.hide();
+        },
+        //Jika Error
+        function (error){   
+        },
+        //Tutup Loading
+        function(){
+        }
+      );
+
+      //PROFILE TOKO
+      this.profileservice.showprofile().subscribe(
+        //Jika data sudah berhasil di load
+        (data:ProfileStoreArray[])=>{
+          this.profile=data;
         },
         //Jika Error
         function (error){   

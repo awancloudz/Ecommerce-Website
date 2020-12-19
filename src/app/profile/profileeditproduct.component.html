@@ -35,7 +35,7 @@
                     <div class="account-details-form">
                         <div class="single-input-item">
                             <div class="row">
-                                <div class="col-2">
+                                <div class="col-2 single-product">
                                     <input type="file" (change)="fileProgress($event)" style="display: none" #fileInput formControlName="foto">
                                     <div *ngIf="previewUrl">
                                         <img [src]="previewUrl" width="150" (click)="fileInput.click()">   
@@ -44,13 +44,19 @@
                                         <img src="../../assets/img/box-flat.png" width="150" (click)="fileInput.click()">
                                     </div>
                                     <div *ngIf="!previewUrl && fotoedit1 != undefined">
-                                        <img src="http://localhost:8000/fotoupload/{{fotoedit1}}" width="150" (click)="fileInput.click()">
+                                        <img src="backend/fotoupload/{{fotoedit1}}" width="150" (click)="fileInput.click()">
+                                        <div class="single-product__floating-icons">
+                                            <span class="wishlist"><a (click)="hapusimage(idfoto1)" data-tippy="Hapus Foto" data-tippy-inertia="true"
+                                                data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true"
+                                                data-tippy-theme="sharpborder" data-tippy-placement="left"><i
+                                                  class="ion-android-close"></i></a></span>
+                                        </div>
                                     </div>
                                     <div *ngIf="fileUploadProgress">
                                         Upload progress: {{ fileUploadProgress }}
                                     </div>
                                 </div>
-                                <div class="col-2">
+                                <div class="col-2 single-product">
                                     <input type="file" (change)="fileProgress2($event)" style="display: none" #fileInput2 formControlName="foto2">
                                     <div *ngIf="previewUrl2">
                                         <img [src]="previewUrl2" width="150" (click)="fileInput2.click()">   
@@ -59,13 +65,19 @@
                                         <img src="../../assets/img/box-flat.png" width="150" (click)="fileInput2.click()">
                                     </div>
                                     <div *ngIf="!previewUrl2 && fotoedit2 != undefined">
-                                        <img src="http://localhost:8000/fotoupload/{{fotoedit2}}" width="150" (click)="fileInput2.click()">
+                                        <img src="backend/fotoupload/{{fotoedit2}}" width="150" (click)="fileInput2.click()">
+                                        <div class="single-product__floating-icons">
+                                            <span class="wishlist"><a (click)="hapusimage(idfoto2)" data-tippy="Hapus Foto" data-tippy-inertia="true"
+                                                data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true"
+                                                data-tippy-theme="sharpborder" data-tippy-placement="left"><i
+                                                  class="ion-android-close"></i></a></span>
+                                        </div>
                                     </div>
                                     <div *ngIf="fileUploadProgress2">
                                         Upload progress: {{ fileUploadProgress2 }}
                                     </div>
                                 </div>
-                                <div class="col-2">
+                                <div class="col-2 single-product">
                                     <input type="file" (change)="fileProgress3($event)" style="display: none" #fileInput3 formControlName="foto3">
                                     <div *ngIf="previewUrl3">
                                         <img [src]="previewUrl3" width="150" (click)="fileInput3.click()">   
@@ -74,13 +86,19 @@
                                         <img src="../../assets/img/box-flat.png" width="150" (click)="fileInput3.click()">
                                     </div>
                                     <div *ngIf="!previewUrl3 && fotoedit3 != undefined">
-                                        <img src="http://localhost:8000/fotoupload/{{fotoedit3}}" width="150" (click)="fileInput3.click()">
+                                        <img src="backend/fotoupload/{{fotoedit3}}" width="150" (click)="fileInput3.click()">
+                                        <div class="single-product__floating-icons">
+                                            <span class="wishlist"><a (click)="hapusimage(idfoto3)" data-tippy="Hapus Foto" data-tippy-inertia="true"
+                                                data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true"
+                                                data-tippy-theme="sharpborder" data-tippy-placement="left"><i
+                                                  class="ion-android-close"></i></a></span>
+                                        </div>
                                     </div>
                                     <div *ngIf="fileUploadProgress3">
                                         Upload progress: {{ fileUploadProgress3 }}
                                     </div>
                                 </div>
-                                <div class="col-2">
+                                <div class="col-2 single-product">
                                     <input type="file" (change)="fileProgress4($event)" style="display: none" #fileInput4 formControlName="foto4">
                                     <div *ngIf="previewUrl4">
                                         <img [src]="previewUrl4" width="150" (click)="fileInput4.click()">   
@@ -89,13 +107,19 @@
                                         <img src="../../assets/img/box-flat.png" width="150" (click)="fileInput4.click()">
                                     </div>
                                     <div *ngIf="!previewUrl4 && fotoedit4 != undefined">
-                                        <img src="http://localhost:8000/fotoupload/{{fotoedit4}}" width="150" (click)="fileInput4.click()">
+                                        <img src="backend/fotoupload/{{fotoedit4}}" width="150" (click)="fileInput4.click()">
+                                        <div class="single-product__floating-icons">
+                                            <span class="wishlist"><a (click)="hapusimage(idfoto4)" data-tippy="Hapus Foto" data-tippy-inertia="true"
+                                                data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true"
+                                                data-tippy-theme="sharpborder" data-tippy-placement="left"><i
+                                                  class="ion-android-close"></i></a></span>
+                                        </div>
                                     </div>
                                     <div *ngIf="fileUploadProgress4">
                                         Upload progress: {{ fileUploadProgress4 }}
                                     </div>
                                 </div>
-                                <div class="col-2">
+                                <div class="col-2 single-product">
                                     <input type="file" (change)="fileProgress5($event)" style="display: none" #fileInput5 formControlName="foto5">
                                     <div *ngIf="previewUrl5">
                                         <img [src]="previewUrl5" width="150" (click)="fileInput5.click()">   
@@ -104,7 +128,13 @@
                                         <img src="../../assets/img/box-flat.png" width="150" (click)="fileInput5.click()">
                                     </div>
                                     <div *ngIf="!previewUrl5 && fotoedit5 != undefined">
-                                        <img src="http://localhost:8000/fotoupload/{{fotoedit5}}" width="150" (click)="fileInput5.click()">
+                                        <img src="backend/fotoupload/{{fotoedit5}}" width="150" (click)="fileInput5.click()">
+                                        <div class="single-product__floating-icons">
+                                            <span class="wishlist"><a (click)="hapusimage(idfoto5)" data-tippy="Hapus Foto" data-tippy-inertia="true"
+                                                data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true"
+                                                data-tippy-theme="sharpborder" data-tippy-placement="left"><i
+                                                  class="ion-android-close"></i></a></span>
+                                        </div>
                                     </div>
                                     <div *ngIf="fileUploadProgress5">
                                         Upload progress: {{ fileUploadProgress5 }}
@@ -150,8 +180,8 @@
                             </div>
                         </div>
                         <div class="single-input-item">
-                            <label for="hargagrosir" class="required">Harga Grosir</label>
-                            <input type="text" [(ngModel)]="hargagrosir" name="hargagrosir" formControlName="hargagrosir">
+                            <label for="diskon" class="required">Diskon (%)</label>
+                            <input type="text" [(ngModel)]="diskon" name="diskon" formControlName="diskon">
                         </div>
                         <div class="single-input-item">
                             <label for="stok" class="required">Stok Produk</label>

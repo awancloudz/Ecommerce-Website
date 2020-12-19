@@ -180,8 +180,9 @@
             <!--=======  copyright text  =======-->
             <!--=======  logo  =======-->
   
-            <div class="logo">
-              <img src="../assets/images/logo.png" class="img-fluid" alt="">
+            <div class="logo" style="font-size: 22px; font-weight: bold;text-transform: uppercase;">
+                <a href="/">{{ storename }}</a>
+              <!-- <img src="../assets/images/logo.png" class="img-fluid" alt=""> -->
             </div>
   
             <!--=======  End of logo  =======-->
@@ -189,7 +190,7 @@
             <!--=======  copyright text  =======-->
   
             <div class="copyright-text">
-              <p> &copy; 2020 lezada. <span>All Rights Reserved</span></p>
+              <p> &copy; 2020 {{ storename }}. <span>All Rights Reserved</span></p>
             </div>
   
             <!--=======  End of copyright text  =======-->
@@ -250,7 +251,7 @@
                 <ul>
                   <li><a href="//twitter.com"><i class="fa fa-twitter"></i> Twitter</a></li>
                   <li><a href="//facebook.com"> <i class="fa fa-facebook"></i> Facebook</a></li>
-                  <li><a href="//instagram.com"><i class="fa fa-instagram"></i> Instagram</a></li>
+                  <li><a href="//instagram.com/riccilink"><i class="fa fa-instagram"></i> Instagram</a></li>
                   <li><a href="//youtube.com"> <i class="fa fa-youtube"></i> Youtube</a></li>
                 </ul>
               </nav>
@@ -593,7 +594,7 @@
                 </span>
                 <div class="image">
                   <a href="product/{{ cart.produk.link }}">
-                    <img src="http://localhost:8000/fotoupload/{{ cart.produk.foto }}" class="img-fluid" alt="">
+                    <img src="backend/fotoupload/{{ cart.produk.foto }}" class="img-fluid" alt="">
                   </a>
                 </div>
                 <div class="content">

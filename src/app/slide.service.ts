@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-//Category Array
-import { CategoryArray } from '../app/category/categoryarray';
+//Slide Array
+import { SlideArray } from '../app/profile/slidearray';
 //HTTP Response
 //Tambahkan Response,Request,Header
 import { Http,Response,RequestOptions,Headers } from '@angular/http';
@@ -11,32 +11,23 @@ import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class CategoryService {
-  private items:CategoryArray[]=[];
-  private url:string="backend/categorylist";
-  constructor(public http: Http) { 
+export class SlideService {
+  private items:SlideArray[]=[];
+  private url:string="backend/slidelist";
+  constructor(public http: Http) { }
 
-  }
-  showcategory(){
+  showslide(){
     return this.http.get(this.url).pipe(
       map((response:Response)=>response.json())
     );
   }
-  searchproduct(item:CategoryArray){
-    let body = JSON.stringify(item);
-    let headers = new Headers({ 'Content-Type': 'application/json'});
-    let options = new RequestOptions({ headers: headers, withCredentials: true });
-    return this.http.post(this.url + "/cari",
-                  body, options)
-                 .pipe(map((response:Response)=>response.json()));
-  }
-  detailcategory(item)
+  detailslide(item)
   {
     return this.http.get(this.url + "/" + item).pipe(
       map((response:Response)=>response.json())
     );
   }
-  deletecategory(item){
+  deleteslide(item){
     let headers = new Headers({ 'Content-Type': 'application/json'});
     let options = new RequestOptions({ headers: headers, withCredentials: true });
     return this.http.delete(this.url + "/hapus/" + item.id,

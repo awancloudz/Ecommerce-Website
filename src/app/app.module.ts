@@ -7,7 +7,7 @@ import { HomeComponent, HomeFaqComponent } from './home/home.component';
 import { ProductComponent, ProductDetailComponent } from './product/product.component';
 import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent, CheckoutFinishComponent } from './checkout/checkout.component';
-import { ProfileComponent, ProfileAddressComponent, ProfileAddProductComponent, ProfileEditProductComponent, ProfileAddCategoryComponent, ProfileEditCategoryComponent } from './profile/profile.component';
+import { ProfileComponent, ProfileAddressComponent, ProfileAddProductComponent, ProfileEditProductComponent, ProfileAddCategoryComponent, ProfileEditCategoryComponent, ProfileAddSlideComponent, ProfileEditSlideComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 import { TransactionComponent } from './transaction/transaction.component';
 import { CategoryComponent,CategoryDetailComponent } from './category/category.component';
@@ -26,7 +26,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CartComponent,
     CheckoutComponent, CheckoutFinishComponent,
     ProfileComponent, ProfileAddressComponent, ProfileAddProductComponent, ProfileEditProductComponent,
-    ProfileAddCategoryComponent, ProfileEditCategoryComponent,
+    ProfileAddCategoryComponent, ProfileEditCategoryComponent, ProfileAddSlideComponent, ProfileEditSlideComponent,
     RegisterComponent,
     TransactionComponent,
     CategoryComponent, CategoryDetailComponent,

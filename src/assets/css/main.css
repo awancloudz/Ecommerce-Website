@@ -3094,7 +3094,7 @@ nav.site-nav > ul > li ul.mega-menu-column-5 > li .mega-sub-menu li:last-child a
   line-height: 1.3;
   color: #333;
   font-style: italic;
-  font-family: "Spectral", serif;
+  font-family: "Work Sans", serif;
 }
 @media only screen and (max-width: 767px) {
   .instagram-title-container .subtitle {
@@ -5381,7 +5381,7 @@ nav.site-nav > ul > li ul.mega-menu-column-5 > li .mega-sub-menu li:last-child a
   background-color: #98d8ca;
 }
 .single-product__floating-badges span.hot {
-  background-color: #c61932;
+  background-color: #ff9900;
 }
 .single-product__floating-badges span.out-of-stock {
   background-color: #333;

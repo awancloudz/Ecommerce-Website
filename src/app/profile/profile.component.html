@@ -88,6 +88,45 @@
                 <div class="tab-pane fade" id="adminslide" role="tabpanel">
                   <div class="myaccount-content" >
                     <h3>Slide</h3>
+                    <div class="row">
+                      <div class="col-2"><a class="btn-sm btn-primary" [routerLink]="['/slideadd']"><i class="fa fa-plus"></i> Tambah Slide</a></div>
+                    </div>
+                    <br>
+                    <div class="myaccount-table table-responsive text-center">
+                      <div class="cart-table-container">
+                        <table class="cart-table">
+                          <thead>
+                            <tr>
+                              <th class="product-name">Foto</th>
+                              <th class="product-name">Judul Slide</th>
+                              <th class="product-remove">&nbsp;</th>
+                            </tr>
+                          </thead>
+            
+                          <tbody>
+                            <tr *ngFor="let slide of slidelist">
+                              <td class="product-thumbnail">
+                                <a href="{{ slide.link }}">
+                                  <img src="backend/fotoupload/{{ slide.foto }}" class="img-fluid" alt="">
+                                </a>
+                              </td>
+                              <td class="product-name">
+                                <a href="{{ slide.link }}">{{ slide.judul }}</a>
+                              </td>
+
+                              <td class="product-remove">
+                                <a href="slideedit/{{ slide.id }}">
+                                  <i class="ion-edit"></i>
+                                </a>
+                                <a (click)="delslide(slide)">
+                                  <i class="ion-android-close"></i>
+                                </a>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>            
+                    </div>
                   </div>
                 </div>
                 <!-- Single Tab Content End -->
@@ -99,7 +138,7 @@
                       <div class="col-2"><a class="btn-sm btn-primary" [routerLink]="['/categoryadd']"><i class="fa fa-plus"></i> Tambah Kategori</a></div>
                       <div class="col-4">
                         <div class="search-widget">
-                          <input type="search" placeholder="Cari Kategori Produk" [(ngModel)]="txtcarikategori" name="txtcarikategori">
+                          <input type="search" (keyup)="searchcategory()" placeholder="Cari Kategori Produk" [(ngModel)]="txtcarikategori" name="txtcarikategori">
                           <button type="button"><i class="ion-android-search"></i></button>
                         </div>
                       </div>
@@ -120,7 +159,7 @@
                             <tr *ngFor="let cat of categorylist">
                               <td class="product-thumbnail">
                                 <a href="category/{{ cat.link }}">
-                                  <img src="http://localhost:8000/fotoupload/{{ cat.foto }}" class="img-fluid" alt="">
+                                  <img src="backend/fotoupload/{{ cat.foto }}" class="img-fluid" alt="">
                                 </a>
                               </td>
                               <td class="product-name">
@@ -150,18 +189,20 @@
                     <div class="row">
                       <div class="col-4">
                         <div class="search-widget">
-                          <input type="search" placeholder="Cari No.Order" [(ngModel)]="txtcariorder" name="txtcariorder">
+                          <input type="search" (keyup)="searchorder()" placeholder="Cari No.Order" [(ngModel)]="txtcariorder" name="txtcariorder">
                           <button type="button"><i class="ion-android-search"></i></button>
                         </div>
                       </div>
                     </div>
                     <br>
                     <div class="myaccount-table table-responsive text-center">
-                      <table class="table table-bordered">
+                      <table class="table table-bordered" *ngIf="transactionlist[0].id != null">
                         <thead class="thead-light">
                           <tr>
                             <th>No.Order</th>
                             <th>Tanggal</th>
+                            <th>Pembelian</th>
+                            <th>Pengiriman</th>
                             <th>Total Belanja</th>
                             <th>Action</th>
                             <th>&nbsp;</th>
@@ -171,12 +212,14 @@
                           <tr *ngFor="let order of transactionlist">
                             <td><a [routerLink]="['/transaction/', order.id]">{{ order.kodetransaksi }}</a></td>
                             <td>{{ order.tanggal | date: 'dd-M-yyyy'}}</td>
+                            <td>{{ order.totalbelanja | currency:"IDR":""}}</td>
+                            <td><span style="text-transform: uppercase;">{{ order.kurir }}</span> - {{ order.totalongkir | currency:"IDR":""}}</td>
                             <td>{{ order.subtotal | currency:"IDR":""}}</td>
-                            <td *ngIf="order.status == 'order'"><a class="btn btn-success" style="color:white;" (click)="konfirmasipesanan(order)">Konfirmasi Pesanan</a></td>
+                            <td *ngIf="order.status == 'order'"><a class="btn btn-success" style="color:white;" (click)="konfirmasipesanan(order)">Terima Pesanan</a></td>
                             <td *ngIf="order.status == 'proses'">
-                              <a class="btn btn-primary" style="color:white;">Kirim Pesanan</a>
+                              <a class="btn btn-primary" style="color:white;" data-toggle="modal" data-target="#exampleModalCenter" (click)="pilihresi(order)">Kirim Pesanan</a>
                             </td>
-                            <td *ngIf="order.status == 'kirim'"><a class="btn btn-warning" style="color:white;">Sedang Dikirim</a></td>
+                            <td *ngIf="order.status == 'kirim'">Sedang Dikirim <a class="btn btn-warning" style="color:white;" data-toggle="modal" data-target="#exampleModalLong" (click)="trackorder(order)">Tracking Order</a></td>
                             <td *ngIf="order.status == 'selesai'"><a class="btn btn-danger" style="color:white;">Selesai</a></td>
                             <td><a [routerLink]="['/transaction/', order.id]">Detail</a></td>
                           </tr>
@@ -194,7 +237,7 @@
                       <div class="col-2"><a class="btn-sm btn-primary" [routerLink]="['/productadd']"><i class="fa fa-plus"></i> Tambah Produk</a></div>
                       <div class="col-4">
                         <div class="search-widget">
-                          <input type="search" placeholder="Cari Kode/Nama Produk" [(ngModel)]="txtcariproduk" name="txtcariproduk">
+                          <input type="search" (keyup)="searchproduct()" placeholder="Cari Kode/Nama Produk" [(ngModel)]="txtcariproduk" name="txtcariproduk">
                           <button type="button"><i class="ion-android-search"></i></button>
                         </div>
                       </div>
@@ -208,10 +251,12 @@
                     <br>
                     <div class="myaccount-table table-responsive text-center">
                       <div class="cart-table-container">
-                        <table class="cart-table">
+                        <table class="cart-table" *ngIf="productlist[0].id != null">
                           <thead>
                             <tr>
-                              <th class="product-name" colspan="2">Produk</th>
+                              <th></th>
+                              <th class="product-name">Kode</th>
+                              <th class="product-name">Produk</th>
                               <th class="product-price">Harga</th>
                               <th class="product-quantity">Stok</th>
                               <th class="product-remove">&nbsp;</th>
@@ -222,13 +267,15 @@
                             <tr *ngFor="let product of productlist">
                               <td class="product-thumbnail">
                                 <a href="product/{{ product.link }}">
-                                  <img src="http://localhost:8000/fotoupload/{{ product.foto }}" class="img-fluid" alt="">
+                                  <img src="backend/fotoupload/{{ product.foto }}" class="img-fluid" alt="">
                                 </a>
+                              </td>
+                              <td class="product-name">
+                                <a href="product/{{ product.link }}">{{ product.kodeproduk }}</a>
                               </td>
                               <td class="product-name">
                                 <a href="product/{{ product.link }}">{{ product.namaproduk }}</a>
                               </td>
-            
                               <td class="product-price"><span class="price">Rp.{{ product.hargajual | currency:"IDR":""}}</span></td>
             
                               <td class="product-quantity">
@@ -260,13 +307,13 @@
                     <div class="row">
                       <div class="col-4">
                         <div class="search-widget">
-                          <input type="search" placeholder="Cari Customer" [(ngModel)]="txtcaricustomer" name="txtcaricustomer">
+                          <input type="search" placeholder="Cari Customer" (keyup)="searchcustomer()" [(ngModel)]="txtcaricustomer" name="txtcaricustomer">
                           <button type="button"><i class="ion-android-search"></i></button>
                         </div>
                       </div>
                     </div><br>
                     <div class="myaccount-table table-responsive text-center">
-                      <table class="table table-bordered">
+                      <table class="table table-bordered" *ngIf="items[0].id !=null">
                         <thead class="thead-light">
                           <tr>
                             <th>Nama</th>
@@ -348,12 +395,18 @@
                 <div class="tab-pane fade" id="orders" role="tabpanel">
                   <div class="myaccount-content">
                     <h3>Pembelian</h3>
+                    <div class="search-widget">
+                      <input type="search" (keyup)="searchorder()" placeholder="Cari No.Order" [(ngModel)]="txtcariorder" name="txtcariorder">
+                      <button type="button"><i class="ion-android-search"></i></button>
+                    </div>
                     <div class="myaccount-table table-responsive text-center">
                       <table class="table table-bordered">
                         <thead class="thead-light">
                           <tr>
                             <th>No.Order</th>
                             <th>Tanggal</th>
+                            <th>Pembelian</th>
+                            <th>Pengiriman</th>
                             <th>Total Belanja</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -363,12 +416,14 @@
                           <tr *ngFor="let order of transactionlist">
                             <td><a [routerLink]="['/transaction/', order.id]">{{ order.kodetransaksi }}</a></td>
                             <td>{{ order.tanggal | date: 'dd-M-yyyy'}}</td>
+                            <td>{{ order.totalbelanja | currency:"IDR":""}}</td>
+                            <td><span style="text-transform: uppercase;">{{ order.kurir }}</span> - {{ order.totalongkir | currency:"IDR":""}}</td>
                             <td>{{ order.subtotal | currency:"IDR":""}}</td>
                             <td *ngIf="order.status == 'order'"><a class="btn btn-success" style="color:white;">Menunggu Konfirmasi</a></td>
-                            <td *ngIf="order.status == 'proses'"><a class="btn btn-warning" style="color:white;">Proses Packing</a></td>
-                            <td *ngIf="order.status == 'kirim'"><a class="btn btn-primary" style="color:white;">Sedang Dikirim</a></td>
+                            <td *ngIf="order.status == 'proses'"><a class="btn btn-primary" style="color:white;">Proses Packing</a></td>
+                            <td *ngIf="order.status == 'kirim'">Sedang Dikirim <a class="btn btn-warning" style="color:white;" data-toggle="modal" data-target="#exampleModalLong" (click)="trackorder(order)">Tracking Order</a></td>
                             <td *ngIf="order.status == 'selesai'"><a class="btn btn-danger" style="color:white;">Selesai</a></td>
-                            <td><a [routerLink]="['/transaction/', order.id]">View</a></td>
+                            <td><a [routerLink]="['/transaction/', order.id]">Detail</a></td>
                           </tr>
                         </tbody>
                       </table>
@@ -499,8 +554,8 @@
                     <h3>Billing Address <a class="btn-sm btn-primary" [routerLink]="['/address/add']"><i class="fa fa-plus"></i> Tambah Alamat</a></h3>
                     <address *ngFor="let address of addresslist">
                       <p><strong>{{ address.namaalamat }} - {{ address.nama }}</strong>&nbsp;<a *ngIf="address.utama == '1'"><i class="fa fa-check text-success"></i> Utama</a></p>
-                      <p>{{ address.alamat }} <br>
-                        {{ address.kota.namakota }} - {{ address.kodepos }}</p>
+                      <p>{{ address.alamat }}, Kec.{{ address.kecamatan.namakecamatan }} <br>
+                        Kab/Kota {{ address.kota.namakota }} - {{ address.kodepos }}</p>
                       <p>No.HP: {{ address.nohp }}</p>
                       <a *ngIf="address.utama == '2'"(click)="setbutton(address)"><i class="fa fa-eye text-warning"></i> Set Utama&nbsp;</a>
                       <a *ngIf="address.utama == '2'"(click)="delbutton(address)"><i class="fa fa-trash text-danger"></i> Hapus</a>
@@ -566,3 +621,64 @@
   </div>
 
   <!--=====  End of my account page content  ======-->
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Pengiriman</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="search-widget">
+            <input type="text" [(ngModel)]="idresi">
+            <input type="text" [(ngModel)]="noresi" placeholder="Masukkan No.Resi">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="simpanresi()">Simpan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Long -->
+  <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Tracking Order</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-4"><b>No.Resi </b></div>
+            <div class="col-8">: {{ noresi }}</div>
+          </div><hr>
+          <div *ngFor="let track of trackinghistory | keyvalue">
+            <div *ngIf="track.key =='details'"><b style="text-transform: uppercase;">{{ track.key }} :</b>
+              <div *ngFor="let history of track.value | keyvalue">
+                <div *ngFor="let detail of history.value | keyvalue">
+                  {{detail.key}}:{{detail.value}}
+                </div><hr>
+              </div>
+            </div>
+            <div *ngIf="track.key !='details'"><b style="text-transform: uppercase;">{{ track.key }} :</b>
+              <div *ngFor="let history of track.value | keyvalue">
+                {{history.key}}:{{history.value}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>

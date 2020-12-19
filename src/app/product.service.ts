@@ -13,7 +13,7 @@ import { map } from 'rxjs/operators';
 })
 export class ProductService {
   private items:ProductArray[]=[];
-  private url:string="http://localhost:8000/productlist";
+  private url:string="backend/productlist";
   constructor(public http: Http){ 
 
   }
@@ -23,11 +23,25 @@ export class ProductService {
       map((response:Response)=>response.json())
     );
   }
+  showproductsorting(id)
+  {
+    return this.http.get(this.url+"/sorting/"+id).pipe(
+      map((response:Response)=>response.json())
+    );
+  }
   detailproduct(item)
   {
     return this.http.get(this.url + "/" + item).pipe(
       map((response:Response)=>response.json())
     );
+  }
+  searchproduct(item:ProductArray){
+    let body = JSON.stringify(item);
+    let headers = new Headers({ 'Content-Type': 'application/json'});
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
+    return this.http.post(this.url + "/cari",
+                  body, options)
+                 .pipe(map((response:Response)=>response.json()));
   }
   saveproduct(item:ProductArray){
     let body = JSON.stringify(item);
@@ -49,6 +63,13 @@ export class ProductService {
     let headers = new Headers({ 'Content-Type': 'application/json'});
     let options = new RequestOptions({ headers: headers, withCredentials: true });
     return this.http.delete(this.url + "/hapus/" + item.id,
+                  options)
+                 .pipe(map((response:Response)=>response.json()));
+  }
+  deletephoto(idfoto){
+    let headers = new Headers({ 'Content-Type': 'application/json'});
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
+    return this.http.delete(this.url + "/hapusfoto/" + idfoto,
                   options)
                  .pipe(map((response:Response)=>response.json()));
   }

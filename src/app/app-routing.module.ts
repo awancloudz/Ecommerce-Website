@@ -4,7 +4,7 @@ import { HomeComponent, HomeFaqComponent } from './home/home.component';
 import { ProductComponent, ProductDetailComponent } from './product/product.component';
 import { CategoryComponent, CategoryDetailComponent } from './category/category.component';
 import { BlogComponent } from './blog/blog.component';
-import { ProfileComponent, ProfileAddressComponent, ProfileAddProductComponent, ProfileEditProductComponent, ProfileAddCategoryComponent, ProfileEditCategoryComponent } from './profile/profile.component';
+import { ProfileComponent, ProfileAddressComponent, ProfileAddProductComponent, ProfileEditProductComponent, ProfileAddCategoryComponent, ProfileEditCategoryComponent, ProfileAddSlideComponent, ProfileEditSlideComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 import { CartComponent } from './cart/cart.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
@@ -26,6 +26,8 @@ const routes: Routes = [
   { path: 'category/:id', component: CategoryDetailComponent },
   { path: 'categoryadd', component: ProfileAddCategoryComponent },
   { path: 'categoryedit/:id', component: ProfileEditCategoryComponent },
+  { path: 'slideadd', component: ProfileAddSlideComponent },
+  { path: 'slideedit/:id', component: ProfileEditSlideComponent },
   { path: 'blog', component: BlogComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'address/add', component: ProfileAddressComponent },

@@ -16,21 +16,53 @@
                 "prevArrow": {"buttonClass": "slick-prev", "iconClass": "ti-angle-left" },
                 "nextArrow": {"buttonClass": "slick-next", "iconClass": "ti-angle-right" }
             }'>
-    
-    
+          
           <!--=======  single slider  =======-->
-          <div class="lezada-single-slider bg-img" data-bg="../../assets/images/jewelry-one/slider-one.jpg">
+          <div class="lezada-single-slider" style="background-image: url('{{ slideimg[0].foto }}');">
             <div class="container h-90">
               <div class="row align-items-center h-90">
                 <div class="lezada-single-slider__content lezada-single-slider__content--spectral-style">
-                  <h5 class="subtitle">Small Collection</h5>
-                  <h2 class="main-title">Every woman deserves <br> only the best </h2>
-                  <a href="product" class="lezada-button lezada-button--medium">Shop Now</a>
+                  <h5 class="subtitle">{{ slideimg[0].judul }}</h5>
+                  <h2 class="main-title">{{ slideimg[0].deskripsi }}</h2>
+                  <a href="{{ slideimg[0].link }}" class="lezada-button lezada-button--medium">{{ slideimg[0].judultombol }}</a>
                 </div>
               </div>
             </div>
           </div>
-          <div class="lezada-single-slider bg-img" data-bg="../../assets/images/parallax-bg/bg-parallax-1.jpg">
+          <div class="lezada-single-slider" style="background-image: url('{{ slideimg[1].foto }}');">
+            <div class="container h-90">
+              <div class="row align-items-center h-90">
+                <div class="lezada-single-slider__content lezada-single-slider__content--spectral-style">
+                  <h5 class="subtitle">{{ slideimg[1].judul }}</h5>
+                  <h2 class="main-title">{{ slideimg[1].deskripsi }}</h2>
+                  <a href="{{ slideimg[1].link }}" class="lezada-button lezada-button--medium">{{ slideimg[1].judultombol }}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="lezada-single-slider" style="background-image: url('{{ slideimg[2].foto }}');">
+            <div class="container h-90">
+              <div class="row align-items-center h-90">
+                <div class="lezada-single-slider__content lezada-single-slider__content--spectral-style">
+                  <h5 class="subtitle">{{ slideimg[2].judul }}</h5>
+                  <h2 class="main-title">{{ slideimg[2].deskripsi }}</h2>
+                  <a href="{{ slideimg[2].link }}" class="lezada-button lezada-button--medium">{{ slideimg[2].judultombol }}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="lezada-single-slider" style="background-image: url('{{ slideimg[3].foto }}');">
+            <div class="container h-90">
+              <div class="row align-items-center h-90">
+                <div class="lezada-single-slider__content lezada-single-slider__content--spectral-style">
+                  <h5 class="subtitle">{{ slideimg[3].judul }}</h5>
+                  <h2 class="main-title">{{ slideimg[3].deskripsi }}</h2>
+                  <a href="{{ slideimg[3].link }}" class="lezada-button lezada-button--medium">{{ slideimg[3].judultombol }}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="lezada-single-slider bg-img" data-bg="">
             <div class="container h-90">
               <div class="row align-items-center h-90">
                 <div class="lezada-single-slider__content lezada-single-slider__content--spectral-style">
@@ -51,7 +83,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
           <!--=======  End of single slider  =======-->
     
     
@@ -154,12 +186,12 @@
 
                 <div class="single-product__image">
                   <a class="image-wrap" href="product/{{ product.link }}">
-                    <img src="http://localhost:8000/fotoupload/{{ product.foto }}" class="img-fluid" alt="">
-                    <img src="http://localhost:8000/fotoupload/{{ product.fotoproduk[1].foto }}" class="img-fluid" alt="">
+                    <img src="backend/fotoupload/{{ product.foto }}" class="img-fluid" alt="">
+                    <img src="backend/fotoupload/{{ product.fotoproduk[1].foto }}" class="img-fluid" alt="">
                   </a>
 
                   <div class="single-product__floating-badges">
-                    <span class="onsale">-10%</span>
+                    <span class="onsale" *ngIf="product.diskon!=0">{{ product.diskon }}%</span>
                     <span class="hot">hot</span>
                   </div>
 
@@ -207,9 +239,12 @@
                     <!-- <a href="#">Select options</a> -->
                     <a (click)="cartbutton(product)">Add to cart</a>
                   </div>
-                  <div class="price">
+                  <div class="price" *ngIf="product.diskon!=0">
                     <span class="main-price discounted">{{ product.hargajual | currency:"IDR":""}}</span>
-                    <span class="discounted-price">{{ product.hargagrosir | currency:"IDR":""}}</span>
+                    <span class="discounted-price">{{ product.hargajual - (product.hargajual * (product.diskon/100)) | currency:"IDR":""}}</span>
+                  </div>
+                  <div class="price" *ngIf="product.diskon==0">
+                    <span class="discounted-price">{{ product.hargajual | currency:"IDR":""}}</span>
                   </div>
                 </div>
 
@@ -286,6 +321,39 @@
 
       <!--=====  End of product carousel container  ======-->
     
+      <!--=============================================
+      =            instagram image slider         =
+      =============================================-->
+    
+      <div class="instagram-image-slider-area grey-bg-two mb-130 mb-md-100 mb-sm-80">
+        <div class="container wide">
+          <div class="row">
+            <div class="col-lg-12 text-center">
+              <div class="instagram-title-container mb-80 mb-md-60 mb-sm-40">
+                <h4 class="title">FOLLOW US ON INSTAGRAM</h4>
+                <h2 class="subtitle">@riccilink</h2>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <!--=======  instagram image container  =======-->
+    
+              <div class="instagram-image-slider-container">
+                <div class="instagram-feed-thumb">
+                  <div id="instagramFeedTwo" class="instagram-carousel-type2">
+                  </div>
+                </div>
+              </div>
+    
+              <!--=======  End of instagram image container  =======-->
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <!--=====  End of instagram image slider  ======-->
+
       <!--=============================================
         =            about text bg area            =
         =============================================-->
@@ -466,38 +534,5 @@
       </div>
     
       <!--=====  End of banner cta  ======-->
-    
-      <!--=============================================
-      =            instagram image slider         =
-      =============================================-->
-    
-      <div class="instagram-image-slider-area grey-bg-two pt-130 pb-130 pt-md-100 pb-md-100 pt-sm-80 pb-sm-80">
-        <div class="container wide">
-          <div class="row">
-            <div class="col-lg-12 text-center">
-              <div class="instagram-title-container mb-80 mb-md-60 mb-sm-40">
-                <h4 class="title">FOLLOW US</h4>
-                <h2 class="subtitle">@riccilink</h2>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-12">
-              <!--=======  instagram image container  =======-->
-    
-              <div class="instagram-image-slider-container">
-                <div class="instagram-feed-thumb">
-                  <div id="instagramFeedTwo" class="instagram-carousel-type2">
-                  </div>
-                </div>
-              </div>
-    
-              <!--=======  End of instagram image container  =======-->
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <!--=====  End of instagram image slider  ======-->
   
       

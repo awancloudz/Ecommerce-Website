@@ -54,13 +54,13 @@
 							<!--=======  filter dropdown  =======-->
 
 							<div class="single-icon filter-dropdown">
-								<select class="nice-select">
-									<option value="0">Default sorting</option>
-									<option value="1">Sort ny popularity</option>
-									<option value="0">Sort by average rating</option>
-									<option value="0">Sort by latest</option>
-									<option value="0">Sort by price: low to high</option>
-									<option value="0">Sort by price: high to low</option>
+								<select [(ngModel)]="sorting" (change)="viewsorting()">
+									<option value="default">Default sorting</option>
+									<option value="popular">Sort by popularity</option>
+									<option value="rating">Sort by average rating</option>
+									<option value="latest">Sort by latest</option>
+									<option value="lowtohigh">Sort by price: low to high</option>
+									<option value="hightolow">Sort by price: high to low</option>
 								</select>
 							</div>
 
@@ -69,7 +69,7 @@
 							<!--=======  grid icons  =======-->
 
 							<div class="single-icon grid-icons">
-								<a data-target="five-column" href="javascript:void(0)"><i class="ti-layout-grid4-alt"></i></a>
+								<!-- <a data-target="five-column" href="javascript:void(0)"><i class="ti-layout-grid4-alt"></i></a> -->
 								<a data-target="four-column" class="active" href="javascript:void(0)"><i
 										class="ti-layout-grid3-alt"></i></a>
 								<a data-target="three-column" href="javascript:void(0)"><i class="ti-layout-grid2-alt"></i></a>
@@ -111,12 +111,12 @@
 							<div class="single-filter-widget">
 								<h2 class="single-filter-widget--title">Sort by</h2>
 								<ul class="single-filter-widget--list">
-									<li><a href="#">Default</a></li>
-									<li><a href="#">Popularity</a></li>
-									<li><a href="#">Average rating</a></li>
-									<li><a href="#">Newness</a></li>
-									<li><a href="#">Price: low to high</a></li>
-									<li><a href="#">Price: high to low</a></li>
+									<li><a (click)="viewsorting2('default')">Default</a></li>
+									<li><a (click)="viewsorting2('popular')">Popularity</a></li>
+									<li><a (click)="viewsorting2('rating')">Average rating</a></li>
+									<li><a (click)="viewsorting2('latest')">Latest</a></li>
+									<li><a (click)="viewsorting2('lowtohigh')">Price: low to high</a></li>
+									<li><a (click)="viewsorting2('hightolow')">Price: high to low</a></li>
 								</ul>
 							</div>
 
@@ -263,7 +263,7 @@
 
 								<div class="search-widget">
 									<form action="#">
-										<input type="search" placeholder="Search products ...">
+										<input type="search" (keyup)="searchproduct()" [(ngModel)]="txtcariproduk" name="txtcariproduk" placeholder="Search products ...">
 										<button type="button"><i class="ion-android-search"></i></button>
 									</form>
 								</div>
@@ -462,7 +462,7 @@
 					</div>
 					<div class="col-lg-9 order-1 order-lg-2 mb-md-80 mb-sm-80">
 
-						<div class="row product-isotope shop-product-wrap four-column">
+						<div class="row product-isotope shop-product-wrap four-column" *ngIf="productlist[0].id !=null">
 
 							<!--=======  single product  =======-->
 							<div class="col-12 col-lg-3 col-md-6 col-sm-6 mb-45 hot sale new" *ngFor="let product of productlist">
@@ -471,12 +471,12 @@
 
 									<div class="single-product__image">
 										<a class="image-wrap" href="product/{{ product.link }}">
-											<img src="http://localhost:8000/fotoupload/{{ product.foto }}" class="img-fluid" alt="">
-											<img src="http://localhost:8000/fotoupload/hover-{{ product.foto }}" class="img-fluid" alt="">
+											<img src="backend/fotoupload/{{ product.foto }}" class="img-fluid" alt="">
+											<img src="backend/fotoupload/{{ product.fotoproduk[1].foto }}" class="img-fluid" alt="">
 										</a>
 
 										<div class="single-product__floating-badges">
-											<span class="onsale">-10%</span>
+											<span class="onsale" *ngIf="product.diskon!=0">{{ product.diskon }}%</span>
 											<span class="hot">hot</span>
 										</div>
 
@@ -524,9 +524,12 @@
 											<!-- <a href="#">Select options</a> -->
 											<a (click)="cartbutton(product)">Add to cart</a>
 										</div>
-										<div class="price">
+										<div class="price" *ngIf="product.diskon!=0">
 											<span class="main-price discounted">{{ product.hargajual | currency:"IDR":""}}</span>
-											<span class="discounted-price">{{ product.hargagrosir | currency:"IDR":""}}</span>
+											<span class="discounted-price">{{ product.hargajual - (product.hargajual * (product.diskon/100)) | currency:"IDR":""}}</span>
+										</div>
+										<div class="price" *ngIf="product.diskon==0">
+											<span class="discounted-price">{{ product.hargajual | currency:"IDR":""}}</span>
 										</div>
 									</div>
 
@@ -537,12 +540,12 @@
 
 									<div class="single-product__image">
 										<a class="image-wrap" href="product/{{ product.link }}">
-											<img src="http://localhost:8000/fotoupload/{{ product.foto }}" class="img-fluid" alt="">
-                    						<img src="http://localhost:8000/fotoupload/hover-{{ product.foto }}" class="img-fluid" alt="">
+											<img src="backend/fotoupload/{{ product.foto }}" class="img-fluid" alt="">
+                    						<img src="backend/fotoupload/{{ product.fotoproduk[1].foto }}" class="img-fluid" alt="">
 										</a>
 
 										<div class="single-product__floating-badges">
-											<span class="onsale">-10%</span>
+											<span class="onsale" *ngIf="product.diskon!=0">{{ product.diskon }}%</span>
 											<span class="hot">hot</span>
 										</div>
 
@@ -589,9 +592,12 @@
 										<div class="title">
 											<h3> <a href="product/{{ product.id }}">{{ product.namaproduk }}</a></h3>
 										</div>
-										<div class="price">
+										<div class="price" *ngIf="product.diskon!=0">
 											<span class="main-price discounted">{{ product.hargajual | currency:"IDR":""}}</span>
-                    						<span class="discounted-price">{{ product.hargagrosir | currency:"IDR":""}}</span>
+											<span class="discounted-price">{{ product.hargajual - (product.hargajual * (product.diskon/100)) | currency:"IDR":""}}</span>
+										</div>
+										<div class="price" *ngIf="product.diskon==0">
+											<span class="discounted-price">{{ product.hargajual | currency:"IDR":""}}</span>
 										</div>
 										<p class="short-desc"> DESKRIPSI PRODUK
 										</p>

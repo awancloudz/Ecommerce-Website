@@ -471,12 +471,12 @@
 
 									<div class="single-product__image">
 										<a class="image-wrap" href="product/{{ product.link }}">
-											<img src="http://localhost:8000/fotoupload/{{ product.foto }}" class="img-fluid" alt="">
-											<img src="http://localhost:8000/fotoupload/hover-{{ product.foto }}" class="img-fluid" alt="">
+											<img src="backend/fotoupload/{{ product.foto }}" class="img-fluid" alt="">
+											<img src="backend/fotoupload/hover-{{ product.foto }}" class="img-fluid" alt="">
 										</a>
 
 										<div class="single-product__floating-badges">
-											<span class="onsale">-10%</span>
+											<span class="onsale" *ngIf="product.diskon!=0">{{ product.diskon }}%</span>
 											<span class="hot">hot</span>
 										</div>
 
@@ -524,9 +524,12 @@
 											<!-- <a href="#">Select options</a> -->
 											<a (click)="cartbutton(product)">Add to cart</a>
 										</div>
-										<div class="price">
+										<div class="price" *ngIf="product.diskon!=0">
 											<span class="main-price discounted">{{ product.hargajual | currency:"IDR":""}}</span>
-											<span class="discounted-price">{{ product.hargagrosir | currency:"IDR":""}}</span>
+											<span class="discounted-price">{{ product.hargajual - (product.hargajual * (product.diskon/100)) | currency:"IDR":""}}</span>
+										</div>
+										<div class="price" *ngIf="product.diskon==0">
+											<span class="discounted-price">{{ product.hargajual | currency:"IDR":""}}</span>
 										</div>
 									</div>
 
@@ -537,8 +540,8 @@
 
 									<div class="single-product__image">
 										<a class="image-wrap" href="product/{{ product.link }}">
-											<img src="http://localhost:8000/fotoupload/{{ product.foto }}" class="img-fluid" alt="">
-                    						<img src="http://localhost:8000/fotoupload/hover-{{ product.foto }}" class="img-fluid" alt="">
+											<img src="backend/fotoupload/{{ product.foto }}" class="img-fluid" alt="">
+                    						<img src="backend/fotoupload/hover-{{ product.foto }}" class="img-fluid" alt="">
 										</a>
 
 										<div class="single-product__floating-badges">
@@ -589,9 +592,12 @@
 										<div class="title">
 											<h3> <a href="product/{{ product.id }}">{{ product.namaproduk }}</a></h3>
 										</div>
-										<div class="price">
+										<div class="price" *ngIf="product.diskon!=0">
 											<span class="main-price discounted">{{ product.hargajual | currency:"IDR":""}}</span>
-                    						<span class="discounted-price">{{ product.hargagrosir | currency:"IDR":""}}</span>
+											<span class="discounted-price">{{ product.hargajual - (product.hargajual * (product.diskon/100)) | currency:"IDR":""}}</span>
+										</div>
+										<div class="price" *ngIf="product.diskon==0">
+											<span class="discounted-price">{{ product.hargajual | currency:"IDR":""}}</span>
 										</div>
 										<p class="short-desc"> DESKRIPSI PRODUK
 										</p>

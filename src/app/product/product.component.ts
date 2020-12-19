@@ -24,6 +24,21 @@ export class ProductComponent implements OnInit {
   id_users:Number;
   id_produk:Number;
   jumlah:Number;
+  id_kategoriproduk:Number;
+  kodeproduk:String;
+  namaproduk:String; 
+  deskripsi:String;
+  foto:String;
+  link:String; 
+  stok:Number;
+  berat:Number; 
+  hargabeli:Number; 
+  hargajual:Number; 
+  diskon:Number;
+  dilihat:Number;
+  terjual:Number;
+  txtcariproduk:String;
+  sorting:String;
   productlist:ProductArray[]=[];
   cartlist:CartArray[]=[];
   profile:ProfileArray[]=[];
@@ -37,6 +52,7 @@ export class ProductComponent implements OnInit {
       //Jika data sudah berhasil di load
       (data:ProductArray[])=>{
         this.productlist=data;
+        this.sorting = "default";
         //this.spinner.hide();
       },
       //Jika Error
@@ -119,9 +135,53 @@ export class ProductComponent implements OnInit {
       this.router.navigate(['register']);
     }
   }
-
+  searchproduct(){
+    this.productservice.searchproduct(new ProductArray(this.id,this.id_kategoriproduk,this.txtcariproduk,this.namaproduk,this.deskripsi,this.foto,this.link,this.stok,this.berat,this.hargabeli,this.hargajual,this.diskon,this.dilihat,this.terjual)).subscribe(
+      //Jika data sudah berhasil di load
+      (data:ProductArray[])=>{
+        this.productlist = data;
+      },
+      //Jika Error
+      function (error){   
+      },
+      //Tutup Loading
+      function(){
+      }
+    );  
+  }
   wishlistbutton(product){
     
+  }
+  viewsorting(){
+    this.productservice.showproductsorting(this.sorting).subscribe(
+      //Jika data sudah berhasil di load
+      (data:ProductArray[])=>{
+        this.productlist=data;
+        //this.spinner.hide();
+      },
+      //Jika Error
+      function (error){   
+      },
+      //Tutup Loading
+      function(){
+      }
+    );
+  }
+  viewsorting2(id){
+    console.log(id);
+    this.productservice.showproductsorting(id).subscribe(
+      //Jika data sudah berhasil di load
+      (data:ProductArray[])=>{
+        this.productlist=data;
+        //this.spinner.hide();
+      },
+      //Jika Error
+      function (error){   
+      },
+      //Tutup Loading
+      function(){
+      }
+    );
   }
 }
 

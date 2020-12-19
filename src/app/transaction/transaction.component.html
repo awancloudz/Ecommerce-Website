@@ -61,7 +61,7 @@
                             <tr *ngFor="let detail of detaillist">
                                 <td class="product-thumbnail">
                                     <a href="{{ detail.produk.link }}">
-                                        <img src="assets/images/products/{{ detail.produk.foto }}" class="img-fluid" alt="">
+                                        <img src="backend/fotoupload/{{ detail.produk.foto }}" class="img-fluid" alt="">
                                     </a>
                                 </td>
                                 <td class="product-name">
@@ -92,16 +92,10 @@
                             <!--=======  coupon form  =======-->
 
                             <div class="lezada-form coupon-form">
-                                <form action="#">
-                                    <div class="row">
-                                        <!-- <div class="col-md-7 mb-sm-10">
-                                            <input type="text" placeholder="Masukkan kode kupon untuk diskon">
-                                        </div>
-                                        <div class="col-md-5">
-                                            <button class="lezada-button lezada-button--medium">Konfirmasi</button>
-                                        </div> -->
-                                    </div>
-                                </form>
+                                <h3 *ngFor="let toko of profile"><b><u>REKENING TRANSFER</u><br>{{ toko.bank }} {{ toko.nomorrekening }} a.n {{ toko.namarekening }} </b></h3>
+                                <p>
+                                    <!-- Sejumlah tepat beserta 3(tiga) digit angka terakhir. <br><h1>{{ subtotal | currency:"IDR":"Rp. "}}</h1> -->
+                                <br>Konfirmasi sistem otomatis maksimum 1 jam setelah transfer masuk.</p>
                             </div>
 
                             <!--=======  End of coupon form  =======-->

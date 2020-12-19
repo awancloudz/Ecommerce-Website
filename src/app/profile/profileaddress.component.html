@@ -56,19 +56,28 @@
                             </div>
                         </div>
                         <div class="single-input-item">
-                            <label for="alamat" class="required">Alamat Lengkap RT,RW,Kelurahan,Kecamatan</label>
-                            <input type="text" [(ngModel)]="alamat" name="alamat"  formControlName="alamat" [ngClass]="{ 'is-invalid': submitted && f.alamat.errors }">
-                            <div *ngIf="submitted && f.alamat.errors" class="invalid-feedback">
-                                <div *ngIf="f.alamat.errors.required">Alamat Wajib Diisi</div>
-                            </div>
-                        </div>
-                        <div class="single-input-item">
                             <label for="id_kota" class="required">Pilih Kota & Provinsi</label>
-                            <select [(ngModel)]="id_kota" name="id_kota" placeholder="Pilih Kota" formControlName="id_kota" [ngClass]="{ 'is-invalid': submitted && f.id_kota.errors }">
+                            <select [(ngModel)]="id_kota" (change)="viewkecamatan()" name="id_kota" placeholder="Pilih Kota" formControlName="id_kota" [ngClass]="{ 'is-invalid': submitted && f.id_kota.errors }">
                                 <option value="{{ city.id }}" *ngFor="let city of citylist">{{ city.namakota }} - {{ city.provinsi.namaprovinsi }} </option>
                             </select>
                             <div *ngIf="submitted && f.id_kota.errors" class="invalid-feedback">
                                 <div *ngIf="f.id_kota.errors.required">Kota/Provinsi Wajib Diisi</div>
+                            </div>
+                        </div>
+                        <div class="single-input-item">
+                            <label for="id_kecamatan" class="required">Pilih Kecamatan</label>
+                            <select [(ngModel)]="id_kecamatan" name="id_kecamatan" placeholder="Pilih Kecamatan" formControlName="id_kecamatan" [ngClass]="{ 'is-invalid': submitted && f.id_kecamatan.errors }">
+                                <option value="{{ district.id }}" *ngFor="let district of districtlist">{{ district.namakecamatan }} </option>
+                            </select>
+                            <div *ngIf="submitted && f.id_kecamatan.errors" class="invalid-feedback">
+                                <div *ngIf="f.id_kecamatan.errors.required">Kecamatan Wajib Diisi</div>
+                            </div>
+                        </div>
+                        <div class="single-input-item">
+                            <label for="alamat" class="required">Alamat Lengkap RT,RW,Kelurahan</label>
+                            <input type="text" [(ngModel)]="alamat" name="alamat"  formControlName="alamat" [ngClass]="{ 'is-invalid': submitted && f.alamat.errors }">
+                            <div *ngIf="submitted && f.alamat.errors" class="invalid-feedback">
+                                <div *ngIf="f.alamat.errors.required">Alamat Wajib Diisi</div>
                             </div>
                         </div>
                         <div class="single-input-item">

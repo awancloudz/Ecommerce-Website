@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, OnInit } from '@angular/core';
 //Product Service
 import { ProductService } from '../product.service'
+import { SlideService } from '../slide.service'
 //Product Array
 import { ProductArray } from '../product/productarray';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CartArray } from '../cart/cartarray';
 import { CartService } from '../cart.service';
 import { ProfileArray } from '../profile/profilearray';
+import { SlideArray } from '../profile/slidearray';
 import { AppComponent } from '../app.component';
 
 @Component({
@@ -15,25 +17,27 @@ import { AppComponent } from '../app.component';
   styleUrls: ['./home.component.css'],
   entryComponents: [ AppComponent ]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements AfterContentInit {
   loginstatus = localStorage.getItem('loginstatus');
   id:Number;
   id_users:Number;
   id_produk:Number;
   jumlah:Number;
-
+  slideimg:any;
   productlist:ProductArray[]=[];
   cartlist:CartArray[]=[];
   profile:ProfileArray[]=[];
-  constructor(public appcomp:AppComponent,public productservice:ProductService, public cartservice:CartService, public router:Router,) { }
+  slidelist:SlideArray[]=[];
+  constructor(public appcomp:AppComponent,public slideservice:SlideService,public productservice:ProductService, public cartservice:CartService, public router:Router,) { }
 
-  ngOnInit(){
+  ngAfterContentInit():void{
     window.scrollTo(0, 0);
     //this.spinner.show();
     this.productservice.showproduct().subscribe(
       //Jika data sudah berhasil di load
       (data)=>{
         this.productlist=data;
+
         //this.spinner.hide();
       },
       //Jika Error
@@ -44,7 +48,31 @@ export class HomeComponent implements OnInit {
         
       }
     );
-    
+    this.slideservice.showslide().subscribe(
+      //Jika data sudah berhasil di load
+      (data)=>{
+        this.slidelist=data;
+        var fotoslide=[];
+        for(var i in data){
+          fotoslide[i] = {
+            judul:data[i].judul,
+            deskripsi:data[i].deskripsi,
+            foto:"backend/fotoupload/" + data[i].foto,
+            judultombol:data[i].judultombol,
+            link:data[i].judultombol,
+          };
+        }
+        this.slideimg = fotoslide;
+        //this.spinner.hide();
+      },
+      //Jika Error
+      function (error){   
+      },
+      //Tutup Loading
+      function(){
+        
+      }
+    );
     if(this.loginstatus != null){
       this.profile = JSON.parse(localStorage.getItem("editprofile"));
       var iduser = this.profile[0]['id'];

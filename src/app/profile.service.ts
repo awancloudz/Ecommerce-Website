@@ -15,10 +15,11 @@ import { map } from 'rxjs/operators';
 })
 export class ProfileService {
   private items:ProfileArray[]=[];
-  private url:string="http://localhost:8000/userlogin";
-  private url2:string="http://localhost:8000/citylist";
-  private url3:string="http://localhost:8000/user";
-  private url4:string="http://localhost:8000/profile";
+  private url:string="backend/userlogin";
+  private url2:string="backend/citylist";
+  private url3:string="backend/user";
+  private url4:string="backend/profile";
+  private url5:string="backend/districtlist";
   constructor(public http: Http){ 
     
   }
@@ -40,11 +41,25 @@ export class ProfileService {
       map((response:Response)=>response.json())
     );
   }
+  showdistrict(id)
+  {
+    return this.http.get(this.url5+"/"+id).pipe(
+      map((response:Response)=>response.json())
+    );
+  }
   showuser(iduser)
   {
     return this.http.get(this.url3 + "/" + iduser).pipe(
       map((response:Response)=>response.json())
     );
+  }
+  searchuser(item:ProfileArray){
+    let body = JSON.stringify(item);
+    let headers = new Headers({ 'Content-Type': 'application/json'});
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
+    return this.http.post(this.url3 + "/cari",
+                  body, options)
+                 .pipe(map((response:Response)=>response.json()));
   }
   createuser(item:ProfileArray){
     let body = JSON.stringify(item);

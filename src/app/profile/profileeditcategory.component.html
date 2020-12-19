@@ -44,7 +44,7 @@
                                         <img src="../../assets/img/box-flat.png" width="150" (click)="fileInput.click()">
                                     </div>
                                     <div *ngIf="!previewUrl && foto != ''">
-                                        <img src="http://localhost:8000/fotoupload/{{foto}}" width="150" (click)="fileInput.click()">
+                                        <img src="backend/fotoupload/{{foto}}" width="150" (click)="fileInput.click()">
                                     </div>
                                     <div *ngIf="fileUploadProgress">
                                         Upload progress: {{ fileUploadProgress }}
@@ -62,7 +62,7 @@
                             <input type="hidden" [(ngModel)]="link" id="link" name="link" formControlName="link">
                         </div>
                         <div class="single-input-item">
-                            <button class="check-btn sqr-btn">Save Product</button>
+                            <button class="check-btn sqr-btn">Save Category</button>
                           </div>
                     </div>
                 </div>

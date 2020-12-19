@@ -57,9 +57,14 @@
 												{{ kirim.nohp }}
 											</div>
 
-											<div class="col-12 mb-20">
+											<div class="col-md-6 col-12 mb-20">
 												<label>Alamat*</label><br>
 												{{ kirim.alamat }}
+											</div>
+
+											<div class="col-md-6 col-12 mb-20">
+												<label>Kecamatan*</label><br>
+												{{ namakecamatan }}
 											</div>
 
 											<div class="col-md-6 col-12 mb-20">
@@ -80,6 +85,7 @@
 														<td *ngIf="address.utama == '2'"><b>ID: {{ address.namaalamat }}</b><br>
 															Penerima: {{ address.nama }}<br>
 															Alamat: {{ address.alamat }}<br>
+															Kecamatan: {{ address.kecamatan.namakecamatan }}<br>
 															Kota/Kab: {{ address.kota.namakota }}<br>
 															Kode Pos: {{ address.kodepos }}<hr>
 														</td>
@@ -173,21 +179,27 @@
 									<form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
 									<div class="row">
 										<!-- Ongkir Total -->
-										<div class="col-12 mb-60" *ngFor="let cart2 of cartlist.koleksi2">
+										<div class="col-12 mb-60">
 											<h4 class="checkout-title">Jasa Pengiriman</h4>
 											<div class="form-group">
-												<select name="kurir" class="form-control">
+												<select name="kurir" [(ngModel)]="kurir" class="form-control" (change)="hitungongkir()"  formControlName="kurir" [ngClass]="{ 'is-invalid': submitted && f.kurir.errors }">
+													<option value="jnt">J&T</option>
 													<option value="jne">JNE</option>
+													<option value="tiki">TIKI</option>
+													<option value="sicepat">SiCepat</option>
 												</select>
+											</div>
+											<div *ngIf="submitted && f.kurir.errors" class="invalid-feedback">
+												<div *ngIf="f.kurir.errors.required">Jasa Pengiriman/Kurir Wajib Dipilih</div>
 											</div>
 											<h4 class="checkout-title">Layanan</h4>
 											<div class="form-group">
-												<select name="service" class="form-control" (change)="servicebutton()" [(ngModel)]="service"  formControlName="service" [ngClass]="{ 'is-invalid': submitted && f.service.errors }">
-													<option value="{{ cost.costs }}" *ngFor="let cost of costlist">{{ cost.service }} ({{ cost.estimate }}) Hari - {{ cost.costs | currency:"IDR":"Rp. " }}</option>
+												<select name="service" class="form-control" (change)="servicebutton()" [(ngModel)]="service" formControlName="service" [ngClass]="{ 'is-invalid': submitted && f.service.errors }">
+													<option value="{{ cost.cost }}" *ngFor="let cost of costlist">{{ cost.service }} ({{ cost.estimate }}) Hari - {{ cost.cost | currency:"IDR":"Rp. " }}</option>
 												</select>
 											</div>
 											<div *ngIf="submitted && f.service.errors" class="invalid-feedback">
-												<div *ngIf="f.service.errors.required">Layanan Kurir Wajib Dipilih</div>
+												<div *ngIf="f.service.errors.required">Layanan Wajib Dipilih</div>
 											</div>
 										</div>
 									</div>
@@ -206,13 +218,13 @@
 												<h4>Sub Total <span>{{ cart2.totalbayar | currency:"IDR":"" }}</span></h4>
 
 											</div>
-
+											<button class="lezada-button lezada-button--medium mt-30">Konfirmasi Pembayaran</button>
 										</div>
 
 										<!-- Payment Method -->
 										<div class="col-12">
 
-											<h4 class="checkout-title">Metode Pembayaran</h4>
+											<!-- <h4 class="checkout-title">Metode Pembayaran</h4>
 
 											<div class="checkout-payment-method">
 
@@ -228,9 +240,9 @@
 													<p data-method="cash">Pembayaran langsung di tempat, pembeli & penjual bertemu di titik yang disepakati.</p>
 												</div>
 
-											</div>
+											</div> -->
 
-											<button class="lezada-button lezada-button--medium mt-30">Konfirmasi Pembayaran</button>
+											
 
 										</div>
 

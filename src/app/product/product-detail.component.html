@@ -42,6 +42,7 @@
 									<!--=======  shop product gallery icons  =======-->
 
 									<div class="single-product__floating-badges single-product__floating-badges--shop-product">
+										<span class="onsale" *ngIf="product.diskon!=0">{{ product.diskon }}%</span>
 										<span class="hot">hot</span>
 									</div>
 
@@ -64,7 +65,7 @@
 									<div class="shop-product__big-image-gallery-slider">
 										<!--=======  single image  =======-->
 										<div class="single-image" *ngFor="let product2 of product.fotoproduk">
-											<img src="http://localhost:8000/fotoupload/{{ product2.foto }}" class="img-fluid" alt="">
+											<img src="backend/fotoupload/{{ product2.foto }}" class="img-fluid" alt="">
 										</div>
 										<!--=======  End of single image  =======-->
 									</div>
@@ -75,13 +76,13 @@
 
 								<!--=======  shop product small image gallery  =======-->
 
-								<!-- <div class="shop-product__small-image-gallery-wrapper">
+								<div class="shop-product__small-image-gallery-wrapper">
 									<div class="shop-product__small-image-gallery-slider">
 										<div class="single-image" *ngFor="let product2 of product.fotoproduk">
-											<img src="assets/images/products/{{ product2.foto }}" class="img-fluid" alt="">
+											<img src="backend/fotoupload/{{ product2.foto }}" class="img-fluid" alt="">
 										</div>
 									</div>
-								</div> -->
+								</div>
 
 								<!--=======  End of shop product small image gallery  =======-->
 							</div>
@@ -127,11 +128,13 @@
 
 									<!--=======  shop product price  =======-->
 
-									<div class="shop-product__price mb-30">
+									<div class="shop-product__price mb-30" *ngIf="product.diskon!=0">
 										<span class="main-price discounted">{{ product.hargajual | currency:"IDR":""}}</span>
-										<span class="discounted-price">{{ product.hargagrosir | currency:"IDR":""}}</span>
+										<span class="discounted-price">{{ product.hargajual - (product.hargajual * (product.diskon/100)) | currency:"IDR":""}}</span>
 									</div>
-
+									<div class="shop-product__price mb-30" *ngIf="product.diskon==0">
+										<span class="discounted-price">{{ product.hargajual | currency:"IDR":""}}</span>
+									</div>
 									<!--=======  End of shop product price  =======-->
 
 									<!--=======  shop product short description  =======-->
@@ -144,7 +147,7 @@
 
 									<!--=======  shop product size block  =======-->
 
-									<div class="shop-product__block shop-product__block--size mb-20">
+									<!-- <div class="shop-product__block shop-product__block--size mb-20">
 										<div class="shop-product__block__title">Size: </div>
 										<div class="shop-product__block__value">
 											<div class="shop-product-size-list">
@@ -154,13 +157,13 @@
 												<span class="single-size">XS</span>
 											</div>
 										</div>
-									</div>
+									</div> -->
 
 									<!--=======  End of shop product size block  =======-->
 
 									<!--=======  shop product color block  =======-->
 
-									<div class="shop-product__block shop-product__block--color mb-20">
+									<!-- <div class="shop-product__block shop-product__block--color mb-20">
 										<div class="shop-product__block__title">Color: </div>
 										<div class="shop-product__block__value">
 											<div class="shop-product-color-list">
@@ -174,7 +177,7 @@
 												</ul>
 											</div>
 										</div>
-									</div>
+									</div> -->
 
 									<!--=======  End of shop product color block  =======-->
 
@@ -183,7 +186,7 @@
 									<div class="shop-product__block shop-product__block--quantity mb-40">
 										<div class="shop-product__block__title">Quantity: </div>
 										<div class="shop-product__block__value">
-											<div class="pro-qty d-inline-block mx-0 pt-0">
+											<div class="d-inline-block mx-0 pt-0">
 												<a (click)="decrement()"><i class="fa fa-minus"></i></a>&nbsp;&nbsp;
 												<input type="number" style="width: 100px;text-align:center;" name="jumlah" [(ngModel)]="jumlah" (change)="qtybutton()">&nbsp;&nbsp;
 												<a (click)="increment()"><i class="fa fa-plus"></i></a>
@@ -206,7 +209,7 @@
 
 									<!--=======  shop product brands  =======-->
 
-									<div class="shop-product__brands mb-20">
+									<!-- <div class="shop-product__brands mb-20">
 
 										<a href="#">
 											<img src="assets/images/brands/brand-1.png" class="img-fluid" alt="">
@@ -216,7 +219,7 @@
 											<img src="assets/images/brands/brand-2.png" class="img-fluid" alt="">
 										</a>
 
-									</div>
+									</div> -->
 
 									<!--=======  End of shop product brands  =======-->
 
@@ -231,9 +234,7 @@
 											<tr class="single-info">
 												<td class="quickview-title">Categories: </td>
 												<td class="quickview-value">
-													<a href="#">Fashion</a>,
-													<a href="#">Men</a>,
-													<a href="#">Sunglasses</a>
+													<a href="category/{{product.kategoriproduk.link}}">{{product.kategoriproduk.nama}}</a>
 												</td>
 											</tr>
 											<tr class="single-info">

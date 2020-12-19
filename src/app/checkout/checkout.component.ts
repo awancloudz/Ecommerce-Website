@@ -7,6 +7,7 @@ import { ProfileStoreArray } from '../profile/profilestorearray';
 import { ProfileAddressArray } from '../profile/profileaddressarray';
 import { ProfileCityArray } from '../profile/profilecityarray';
 import { CheckoutArray } from '../checkout/checkoutarray';
+import { CheckongkirArray } from '../checkout/checkongkirarray';
 import { CheckoutService } from '../checkout.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -24,7 +25,9 @@ export class CheckoutComponent implements OnInit {
   nohp:Number;
   password:String;
   alamat:String;
+  id_kecamatan:Number;
   id_kota:Number;
+  namakecamatan:any;
   namakota:any;
   service:any;
   kodepos:String;
@@ -58,6 +61,7 @@ export class CheckoutComponent implements OnInit {
     window.scrollTo(0, 0);
     //this.spinner.show();
     this.checkoutForm = this.formBuilder.group({
+      kurir: ['', Validators.required],
       service: ['', Validators.required],
     });
     if(this.loginstatus != null){
@@ -68,7 +72,6 @@ export class CheckoutComponent implements OnInit {
       this.cartservice.showcart(iduser).subscribe(
         (data:CartArray[])=>{
           this.cartlist=data;
-          console.log(data);
           //MAIN ADDRESS
           this.profileservice.showamainddress(iduser).subscribe(
             (data)=>{
@@ -77,10 +80,13 @@ export class CheckoutComponent implements OnInit {
                 this.id_users = data[key].id_users;
                 this.id_alamat = data[key].id;
                 this.id_kota = data[key].id_kota;
+                this.id_kecamatan = data[key].id_kecamatan;
                 this.namakota = data[key].kota.namakota;
+                this.namakecamatan = data[key].kecamatan.namakecamatan;
               }
               //this.spinner.hide();
-              this.hitungongkir();
+              //this.kurir = 'jnt';
+              //this.hitungongkir();
             },
             //Jika Error
             function (error){   
@@ -118,42 +124,77 @@ export class CheckoutComponent implements OnInit {
     //this.spinner.show();
     //HITUNG BIAYA ONGKIR
     var asal = 399;
-    var tujuan = this.id_kota;
     var berat = 0;
-    
+    var kurir = this.kurir;
     for(var key in this.cartlist['koleksi']){
       berat = berat + this.cartlist['koleksi'][key].produk.berat;
     }
           
-    //this.costservice = [{origin : asal, destination : tujuan, weigth : berat, courier : kurir}]
-    this.costservice = [{origin : asal, destination : tujuan, weigth : berat}]
-    this.checkoutservice.showongkir(this.costservice).subscribe(
-      //Jika data sudah berhasil di load
-      (data3)=>{
-        this.costlist=data3;
-        this.cartlist['koleksi2'][0].totalbayar = this.cartlist['koleksi2'][0].subtotal;
-        this.cartlist['koleksi2'][0].totalongkir = 0;
-        //this.spinner.hide();
-      },
-      //Jika Error
-      function (error){   
-      },
-      //Tutup Loading
-      function(){
-      }
-    );
+    if(kurir == 'jne'){
+      var tujuan = this.id_kota;
+      this.cartlist['koleksi2'][0].totalbayar = this.cartlist['koleksi2'][0].subtotal;
+      this.cartlist['koleksi2'][0].totalongkir = 0;
+      this.costservice = [{origin : asal, destination : tujuan, weigth : berat, courier : kurir}];
+      this.checkoutservice.showongkirjne(this.costservice).subscribe(
+        //Jika data sudah berhasil di load
+        (data3)=>{
+          this.costlist=data3;
+          if(this.costlist.length == 0){
+            alert("Maaf,layanan tidak tersedia!");
+          }
+          else{
+            this.service = this.costlist[0].cost;
+            this.servicebutton();
+          }
+          //this.spinner.hide();
+        },
+        //Jika Error
+        function (error){   
+        },
+        //Tutup Loading
+        function(){
+        }
+      );
+    }
+    else{
+      var tujuan = this.id_kecamatan;
+      this.cartlist['koleksi2'][0].totalbayar = this.cartlist['koleksi2'][0].subtotal;
+      this.cartlist['koleksi2'][0].totalongkir = 0;
+      this.checkoutservice.showongkir(new CheckongkirArray(asal,tujuan,berat,kurir)).subscribe(
+        //Jika data sudah berhasil di load
+        (data3)=>{
+          this.costlist=data3.data['results'];
+          if(this.costlist.length == 0){
+            alert("Maaf,layanan tidak tersedia!");
+          }
+          else{
+            this.service = parseInt(this.costlist[0].cost);
+            this.servicebutton();
+          }
+          //this.spinner.hide();
+        },
+        //Jika Error
+        function (error){   
+        },
+        //Tutup Loading
+        function(){
+        }
+      );
+    }
   }
+
   servicebutton(){
     var totalongkir = parseInt(this.service);
     var totalbelanja = 0;
     var totalbayar = 0;
-    
+
     totalbelanja = this.cartlist['koleksi2'][0].subtotal;
     totalbayar = totalbelanja + totalongkir;
 
     this.cartlist['koleksi2'][0].totalongkir = totalongkir;
     this.cartlist['koleksi2'][0].totalbayar = totalbayar;
   }
+
   get f() { return this.checkoutForm.controls; }
 
   onSubmit() {
@@ -183,7 +224,7 @@ export class CheckoutComponent implements OnInit {
       var tanggal = this.formatDate();
 
       this.checkoutservice.savetransaction(new CheckoutArray(this.id,kodetransaksi,this.id_users,this.id_alamat,tanggal,this.totaldiskon,
-        totalbelanja,totalongkir,totalbayar,"jne",this.service,'order','retail')).subscribe(
+        totalbelanja,totalongkir,totalbayar,this.kurir,this.service,'order','retail')).subscribe(
         //Jika data sudah berhasil di load
         (data)=>{
           alert("Pembelian sukses,silahkan melakukan pembayaran!");

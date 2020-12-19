@@ -5,14 +5,19 @@ import { ProfileService } from '../profile.service';
 import { CheckoutService } from '../checkout.service';
 import { ProductService } from '../product.service'
 import { CategoryService } from '../category.service'
+import { SlideService } from '../slide.service';
 //Profile Array
 import { ProfileArray } from '../profile/profilearray';
 import { ProfileStoreArray } from '../profile/profilestorearray';
 import { ProfileCityArray } from '../profile/profilecityarray';
+import { ProfileDistrictArray } from '../profile/profiledistrictarray';
 import { ProfileAddressArray } from '../profile/profileaddressarray';
+import { SlideArray } from '../profile/slidearray';
 import { CheckoutArray } from '../checkout/checkoutarray';
 import { ProductArray } from '../product/productarray';
 import { CategoryArray } from '../category/categoryarray';
+import { SaveresiArray } from '../checkout/saveresiarray';
+import { TrackorderArray } from '../checkout/trackorderarray';
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpEventType, HttpHeaders } from "@angular/common/http";
@@ -43,6 +48,38 @@ export class ProfileComponent implements OnInit {
   bank:String;
   namarekening:String;
   nomorrekening:String;
+  txtcariproduk:String;
+  txtcarikategori:String;
+  txtcariorder:String;
+  txtcaricustomer:String;
+
+  kodeproduk:String;
+  namaproduk:String; 
+  deskripsi:String;
+  foto:String;
+  link:String; 
+  stok:Number;
+  berat:Number; 
+  hargabeli:Number; 
+  hargajual:Number; 
+  diskon:Number;
+  dilihat:Number;
+  terjual:Number;
+
+  kodetransaksi:String;
+  id_alamat:Number;
+  tanggal:String;
+  totaldiskon:Number;
+  totalbelanja:Number;
+  totalongkir:Number;
+  subtotal:Number;
+  kurir:String;
+  layanan:String;
+  status:String;
+  jenis:String;
+
+  idresi:Number;
+  noresi:String;
 
   items:ProfileArray[]=[];
   citylist:ProfileCityArray[]=[];
@@ -51,7 +88,11 @@ export class ProfileComponent implements OnInit {
   productlist:ProductArray[]=[];
   profile:ProfileStoreArray[]=[];
   categorylist:CategoryArray[]=[];
-  constructor(public categoryservice:CategoryService,public productservice:ProductService, public checkoutservice:CheckoutService,public profileservice:ProfileService, public router:Router) { }
+  slidelist:SlideArray[]=[];
+  trackinglist:TrackorderArray[]=[];
+  trackinghistory:any;
+  
+  constructor(public slideservice:SlideService,public categoryservice:CategoryService,public productservice:ProductService, public checkoutservice:CheckoutService,public profileservice:ProfileService, public router:Router) { }
 
   ngOnInit(){
     window.scrollTo(0, 0);
@@ -59,6 +100,7 @@ export class ProfileComponent implements OnInit {
       //this.spinner.show();
       this.items = JSON.parse(localStorage.getItem("editprofile"));
       var iduser = this.items[0]['id'];
+      this.id_users = iduser;
       this.role =this.items[0]['role'];
 
         // TRANSAKSI
@@ -112,6 +154,21 @@ export class ProfileComponent implements OnInit {
         );
       }
       else if(this.role == 'admin'){
+        //SLIDE
+        this.slideservice.showslide().subscribe(
+          //Jika data sudah berhasil di load
+          (data:SlideArray[])=>{
+            this.slidelist=data;
+            //this.spinner.hide();
+          },
+          //Jika Error
+          function (error){   
+          },
+          //Tutup Loading
+          function(){
+          }
+        );
+        
         //KATEGORIPRODUK
         this.categoryservice.showcategory().subscribe(
           //Jika data sudah berhasil di load
@@ -129,6 +186,7 @@ export class ProfileComponent implements OnInit {
           function(){
           }
         );
+        
         //PRODUK ADMIN
         this.productservice.showproduct().subscribe(
           //Jika data sudah berhasil di load
@@ -186,6 +244,62 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  searchproduct(){
+    this.productservice.searchproduct(new ProductArray(this.id,this.id_kategoriproduk,this.txtcariproduk,this.namaproduk,this.deskripsi,this.foto,this.link,this.stok,this.berat,this.hargabeli,this.hargajual,this.diskon,this.dilihat,this.terjual)).subscribe(
+      //Jika data sudah berhasil di load
+      (data:ProductArray[])=>{
+        this.productlist = data;
+      },
+      //Jika Error
+      function (error){   
+      },
+      //Tutup Loading
+      function(){
+      }
+    );  
+  }
+  searchcategory(){
+    this.categoryservice.searchproduct(new CategoryArray(this.id,this.txtcarikategori,this.link,this.foto)).subscribe(
+      //Jika data sudah berhasil di load
+      (data:CategoryArray[])=>{
+        this.categorylist = data;
+      },
+      //Jika Error
+      function (error){   
+      },
+      //Tutup Loading
+      function(){
+      }
+    );  
+  }
+  searchorder(){
+    this.checkoutservice.searchtransaction(new CheckoutArray(this.id,this.txtcariorder,this.id_users,this.id_alamat,this.tanggal,this.totaldiskon,this.totalbelanja,this.totalongkir,this.subtotal,this.kurir,this.layanan,this.status,this.jenis)).subscribe(
+      //Jika data sudah berhasil di load
+      (data:CheckoutArray[])=>{
+        this.transactionlist = data;
+      },
+      //Jika Error
+      function (error){   
+      },
+      //Tutup Loading
+      function(){
+      }
+    );  
+  }
+  searchcustomer(){
+    this.profileservice.searchuser(new ProfileArray(this.id,this.txtcaricustomer,this.email,this.nohp,this.password,this.alamat,this.id_kota)).subscribe(
+      //Jika data sudah berhasil di load
+      (data:ProfileArray[])=>{
+        this.items = data;
+      },
+      //Jika Error
+      function (error){   
+      },
+      //Tutup Loading
+      function(){
+      }
+    );  
+  }
   savebutton(){
     //this.spinner.show();
     this.profileservice.updateuser(new ProfileArray(this.id,this.nama,this.email,this.nohp,this.password,this.alamat,this.id_kota))
@@ -274,6 +388,50 @@ export class ProfileComponent implements OnInit {
     );
   }
 
+  pilihresi(order){
+    this.idresi = order.id;
+    this.noresi = '';
+  }
+
+  simpanresi(){
+    if(this.noresi == undefined){
+      alert("No.Resi harus diisi!");      
+    }
+    else{
+      this.checkoutservice.saveresi(new SaveresiArray(this.idresi,this.noresi)).subscribe(
+        //Jika data sudah berhasil di load
+        (data)=>{
+          alert("No.Resi sudah dikonfirmasi!");
+          this.ngOnInit();
+        },
+        //Jika Error
+        function (error){   
+        },
+        //Tutup Loading
+        function(){
+        }
+      );
+    }
+  }
+
+  trackorder(order){
+    this.kurir = order.kurir;
+    this.noresi = order.noresi;
+
+    this.checkoutservice.trackorder(new TrackorderArray(this.noresi,this.kurir)).subscribe(
+      //Jika data sudah berhasil di load
+      (data)=>{
+        this.trackinghistory = data.data;
+      },
+      //Jika Error
+      function (error){   
+      },
+      //Tutup Loading
+      function(){
+      }
+    );
+  }
+
   delproduct(product){
     let konfirmasi = confirm("Anda yakin menghapus data?");
     if(konfirmasi == true){
@@ -315,6 +473,27 @@ export class ProfileComponent implements OnInit {
       );
     }
   }
+
+  delslide(slide){
+    let konfirmasi = confirm("Anda yakin menghapus data?");
+    if(konfirmasi == true){
+      //this.spinner.show();
+      this.slideservice.deleteslide(slide).subscribe(
+        //Jika data sudah berhasil di load
+        (data)=>{   
+          alert("Slide Dihapus!");
+          //this.spinner.hide();
+          this.ngOnInit();
+        },
+        //Jika Error
+        function (error){   
+        },
+        //Tutup Loading
+        function(){
+        }
+      );
+    }
+  }
 }
 
 @Component({
@@ -328,6 +507,7 @@ export class ProfileAddressComponent implements OnInit {
   nama:String;
   nohp:Number;
   alamat:String;
+  id_kecamatan:Number;
   id_kota:Number;
   id_users:Number;
   namaalamat:String;
@@ -335,7 +515,8 @@ export class ProfileAddressComponent implements OnInit {
   utama:String;
   profile:ProfileArray[]=[];
   citylist:ProfileCityArray[]=[];
-
+  districtlist:ProfileDistrictArray[]=[];
+  
   addressForm: FormGroup;
   submitted = false;
   constructor(public profileservice:ProfileService,public router:Router,
@@ -350,6 +531,7 @@ export class ProfileAddressComponent implements OnInit {
       nohp: ['', Validators.required],
       alamat: ['', Validators.required],
       id_kota: ['', Validators.required],
+      id_kecamatan: ['', Validators.required],
       kodepos: ['', Validators.required],
     });
     if(this.loginstatus != null){
@@ -358,6 +540,10 @@ export class ProfileAddressComponent implements OnInit {
         //Jika data sudah berhasil di load
         (data:ProfileCityArray[])=>{
           this.citylist=data;
+          if(data.length > 0){
+            this.id_kota = data[0].id;
+            this.viewkecamatan();
+          }
           //this.spinner.hide();
         },
         //Jika Error
@@ -402,7 +588,7 @@ export class ProfileAddressComponent implements OnInit {
             }
           }
 
-          this.profileservice.createaddress(new ProfileAddressArray(this.id,iduser,this.id_kota,this.namaalamat,this.nama,this.alamat,this.kodepos,this.nohp,this.utama))
+          this.profileservice.createaddress(new ProfileAddressArray(this.id,iduser,this.id_kota,this.id_kecamatan,this.namaalamat,this.nama,this.alamat,this.kodepos,this.nohp,this.utama))
           .subscribe(
             (data:ProfileAddressArray[])=>{
               alert("Simpan Alamat sukses!");
@@ -427,6 +613,25 @@ export class ProfileAddressComponent implements OnInit {
       );
     }
   }
+
+  viewkecamatan(){
+    this.profileservice.showdistrict(this.id_kota).subscribe(
+      //Jika data sudah berhasil di load
+      (data:ProfileDistrictArray[])=>{
+        this.districtlist=data;
+        if(data.length > 0){
+          this.id_kecamatan = data[0].id;
+        }
+        //this.spinner.hide();
+      },
+      //Jika Error
+      function (error){   
+      },
+      //Tutup Loading
+      function(){
+      }
+    );
+  }
 }
 
 @Injectable()
@@ -448,7 +653,7 @@ export class ProfileAddProductComponent implements OnInit {
   foto4:any;
   foto5:any;
   hargajual:any;
-  hargagrosir:any;
+  diskon:any;
   hargabeli:any;
   link:any;
   stok:any;
@@ -505,7 +710,7 @@ export class ProfileAddProductComponent implements OnInit {
       foto4: ['', Validators.nullValidator],
       foto5: ['', Validators.nullValidator],
       hargajual: ['', Validators.required],
-      hargagrosir: ['', Validators.nullValidator],
+      diskon: ['', Validators.nullValidator],
       link: ['', Validators.nullValidator],
       hargabeli: ['', Validators.required],
       stok: ['', Validators.required],
@@ -630,7 +835,7 @@ export class ProfileAddProductComponent implements OnInit {
     formData.append('foto4', this.fileData4);
     formData.append('foto5', this.fileData5);
     formData.append('hargabeli', this.hargabeli);
-    formData.append('hargagrosir', this.hargagrosir);
+    formData.append('diskon', this.diskon);
     formData.append('hargajual', this.hargajual);
     formData.append('link', this.link);
     formData.append('stok', this.stok);
@@ -641,7 +846,7 @@ export class ProfileAddProductComponent implements OnInit {
     
     this.fileUploadProgress = '0%';
 
-      this.http.post('http://localhost:8000/productlist', formData, {
+      this.http.post('backend/productlist', formData, {
         headers: headers,
         reportProgress: true,
         observe: 'events',
@@ -718,7 +923,7 @@ export class ProfileEditProductComponent implements OnInit {
   fotoedit4:any;
   fotoedit5:any;
   hargajual:any;
-  hargagrosir:any;
+  diskon:any;
   hargabeli:any;
   link:any;
   stok:any;
@@ -753,7 +958,6 @@ export class ProfileEditProductComponent implements OnInit {
       //Jika data sudah berhasil di load
       (data)=>{
         this.productlist=data;
-        console.log(this.productlist);
         //this.spinner.hide();
         for(var key in data){
           this.id = data[key].id;
@@ -763,7 +967,7 @@ export class ProfileEditProductComponent implements OnInit {
           this.foto = data[key].foto;
           this.link = data[key].link;
           this.hargajual = data[key].hargajual;
-          this.hargagrosir = data[key].hargagrosir;
+          this.diskon = data[key].diskon;
           this.hargabeli = data[key].hargabeli;          
           this.stok = data[key].stok;
           this.berat = data[key].berat;
@@ -798,7 +1002,7 @@ export class ProfileEditProductComponent implements OnInit {
       foto4: ['', Validators.nullValidator],
       foto5: ['', Validators.nullValidator],
       hargajual: ['', Validators.required],
-      hargagrosir: ['', Validators.nullValidator],
+      diskon: ['', Validators.nullValidator],
       link: ['', Validators.nullValidator],
       hargabeli: ['', Validators.required],
       stok: ['', Validators.required],
@@ -928,7 +1132,7 @@ export class ProfileEditProductComponent implements OnInit {
     formData.append('idfoto4', this.idfoto4);
     formData.append('idfoto5', this.idfoto5);
     formData.append('hargabeli', this.hargabeli);
-    formData.append('hargagrosir', this.hargagrosir);
+    formData.append('diskon', this.diskon);
     formData.append('hargajual', this.hargajual);
     formData.append('link', this.link);
     formData.append('stok', this.stok);
@@ -939,7 +1143,7 @@ export class ProfileEditProductComponent implements OnInit {
     
     this.fileUploadProgress = '0%';
 
-      this.http.post('http://localhost:8000/productlist/edit', formData, {
+      this.http.post('backend/productlist/edit', formData, {
         headers: headers,
         reportProgress: true,
         observe: 'events',
@@ -986,6 +1190,22 @@ export class ProfileEditProductComponent implements OnInit {
       $('#link').val($('#link').val().replace(/\s+/g, '-'));
     });
     this.link = $('#link').val();
+  }
+
+  hapusimage(idfoto){
+    this.productservice.deletephoto(idfoto).subscribe(
+      //Jika data sudah berhasil di load
+      (data)=>{
+        alert("Foto dihapus!");
+        location.reload();
+      },
+      //Jika Error
+      function (error){   
+      },
+      //Tutup Loading
+      function(){
+      }
+    ); 
   }
 }
 
@@ -1059,7 +1279,7 @@ export class ProfileAddCategoryComponent implements OnInit {
     
     this.fileUploadProgress = '0%';
 
-      this.http.post('http://localhost:8000/categorylist', formData, {
+      this.http.post('backend/categorylist', formData, {
         headers: headers,
         reportProgress: true,
         observe: 'events',
@@ -1126,7 +1346,6 @@ export class ProfileEditCategoryComponent implements OnInit {
       //Jika data sudah berhasil di load
       (data)=>{
         this.categorylist=data;
-        console.log(this.categorylist);
         //this.spinner.hide();
         for(var key in data){
           this.id = data[key].id;
@@ -1192,7 +1411,7 @@ export class ProfileEditCategoryComponent implements OnInit {
     
     this.fileUploadProgress = '0%';
 
-      this.http.post('http://localhost:8000/categorylist/edit', formData, {
+      this.http.post('backend/categorylist/edit', formData, {
         headers: headers,
         reportProgress: true,
         observe: 'events',
@@ -1228,4 +1447,226 @@ export class ProfileEditCategoryComponent implements OnInit {
     });
     this.link = $('#link').val();
   }
+}
+
+@Component({
+  selector: 'app-profile',
+  templateUrl: './profileaddslide.component.html',
+  styleUrls: ['./profile.component.css']
+})
+export class ProfileAddSlideComponent implements OnInit {
+  id:any;
+  judul:any;
+  deskripsi:any;
+  foto:any;
+  judultombol:any;
+  link:any;
+  //ImageUpload
+  fileData: File = null;
+  previewUrl:any = null;
+  fileUploadProgress: string = null;
+  slideForm: FormGroup;
+  submitted = false;
+  constructor(public router:Router, private formBuilder: FormBuilder,private http: HttpClient){
+
+  }
+
+  ngOnInit(){
+    window.scrollTo(0, 0);
+    this.slideForm = this.formBuilder.group({
+      judul: ['', Validators.required],
+      deskripsi: ['', Validators.required],
+      foto: ['', Validators.nullValidator],
+      judultombol: ['', Validators.nullValidator],
+      link: ['', Validators.nullValidator],
+    });
+  }
+
+  get f() { return this.slideForm.controls; }
+
+  onSubmit() {
+    this.submitted = true;
+    if (this.slideForm.invalid) {
+      return;
+    }
+    this.simpan();
+  }
+
+  fileProgress(fileInput: any) {
+    this.fileData = <File>fileInput.target.files[0];
+    this.preview();
+  }
+
+  preview() {
+    // Show preview 
+    var mimeType = this.fileData.type;
+    if (mimeType.match(/image\/*/) == null) {
+      return;
+    }
+
+    var reader = new FileReader();      
+    reader.readAsDataURL(this.fileData); 
+    reader.onload = (_event) => { 
+      this.previewUrl = reader.result;
+    }
+  }
+
+  simpan(){
+    const formData = new FormData();  
+    formData.append('id', this.id);
+    formData.append('judul', this.judul);
+    formData.append('deskripsi', this.deskripsi);
+    formData.append('foto', this.fileData);
+    formData.append('judultombol', this.judultombol);
+    formData.append('link', this.link);
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
+    headers.append('Accept', 'application/json');
+    
+    this.fileUploadProgress = '0%';
+
+      this.http.post('backend/slidelist', formData, {
+        headers: headers,
+        reportProgress: true,
+        observe: 'events',
+        'responseType': 'text'   
+      })
+      .subscribe(events => {
+        if(events.type === HttpEventType.UploadProgress) {
+          if(this.previewUrl){
+            this.fileUploadProgress = Math.round(events.loaded / events.total * 100) + '%';
+          }
+        } 
+        else if(events.type === HttpEventType.Response) {
+          this.fileUploadProgress = '';
+          alert("Simpan Slide sukses!");
+          this.submitted = false;
+          this.router.navigate(['profile']);
+        }  
+      })
+  }
+  
+}
+
+@Component({
+  selector: 'app-profile',
+  templateUrl: './profileeditslide.component.html',
+  styleUrls: ['./profile.component.css']
+})
+export class ProfileEditSlideComponent implements OnInit {
+  id:any;
+  judul:any;
+  deskripsi:any;
+  foto:any;
+  judultombol:any;
+  link:any;
+  //ImageUpload
+  fileData: File = null;
+  previewUrl:any = null;
+  fileUploadProgress: string = null;
+  slidelist:SlideArray[]=[];
+  slideForm: FormGroup;
+  submitted = false;
+  constructor(public route:ActivatedRoute, public router:Router,public slideservice:SlideService,private formBuilder: FormBuilder,private http: HttpClient){
+
+  }
+
+  ngOnInit(){
+    window.scrollTo(0, 0);
+    var idslide = this.route.snapshot.paramMap.get('id');
+    this.slideservice.detailslide(idslide).subscribe(
+      //Jika data sudah berhasil di load
+      (data)=>{
+        this.slidelist=data;
+        //this.spinner.hide();
+        for(var key in data){
+          this.id = data[key].id;
+          this.judul = data[key].judul;
+          this.deskripsi = data[key].deskripsi;
+          this.foto = data[key].foto;
+          this.judultombol = data[key].judultombol;
+          this.link = data[key].link;
+        }
+      },
+      //Jika Error
+      function (error){   
+      },
+      //Tutup Loading
+      function(){
+      }
+    );
+
+    this.slideForm = this.formBuilder.group({
+      id: ['', Validators.nullValidator],
+      judul: ['', Validators.required],
+      deskripsi: ['', Validators.required],
+      foto: ['', Validators.nullValidator],
+      judultombol: ['', Validators.nullValidator],
+      link: ['', Validators.nullValidator],
+    });
+  }
+
+  get f() { return this.slideForm.controls; }
+
+  onSubmit() {
+    this.submitted = true;
+    if (this.slideForm.invalid) {
+      return;
+    }
+    this.simpan();
+  }
+
+  fileProgress(fileInput: any) {
+    this.fileData = <File>fileInput.target.files[0];
+    this.preview();
+  }
+  
+  preview() {
+    // Show preview 
+    var mimeType = this.fileData.type;
+    if (mimeType.match(/image\/*/) == null) {
+      return;
+    }
+
+    var reader = new FileReader();      
+    reader.readAsDataURL(this.fileData); 
+    reader.onload = (_event) => { 
+      this.previewUrl = reader.result;
+    }
+  }
+
+  simpan(){
+    const formData = new FormData();  
+    formData.append('id', this.id);
+    formData.append('judul', this.judul);
+    formData.append('deskripsi', this.deskripsi);
+    formData.append('foto', this.fileData);
+    formData.append('judultombol', this.judultombol);
+    formData.append('link', this.link);
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
+    headers.append('Accept', 'application/json');
+    
+    this.fileUploadProgress = '0%';
+
+      this.http.post('backend/slidelist/edit', formData, {
+        headers: headers,
+        reportProgress: true,
+        observe: 'events',
+        'responseType': 'text'   
+      })
+      .subscribe(events => {
+        if(events.type === HttpEventType.UploadProgress) {
+          if(this.previewUrl){
+            this.fileUploadProgress = Math.round(events.loaded / events.total * 100) + '%';
+          }
+        } else if(events.type === HttpEventType.Response) {
+          this.fileUploadProgress = '';
+          alert("Edit Slide sukses!");
+          this.submitted = false;
+          this.router.navigate(['profile']);
+        }  
+      })
+  }
+
 }
