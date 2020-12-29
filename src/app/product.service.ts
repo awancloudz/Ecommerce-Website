@@ -13,7 +13,7 @@ import { map } from 'rxjs/operators';
 })
 export class ProductService {
   private items:ProductArray[]=[];
-  private url:string="backend/productlist";
+  private url:string="http://localhost:8000/productlist";
   constructor(public http: Http){ 
 
   }

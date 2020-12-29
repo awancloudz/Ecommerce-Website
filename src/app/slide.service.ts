@@ -13,7 +13,7 @@ import { map } from 'rxjs/operators';
 })
 export class SlideService {
   private items:SlideArray[]=[];
-  private url:string="backend/slidelist";
+  private url:string="http://localhost:8000/slidelist";
   constructor(public http: Http) { }
 
   showslide(){

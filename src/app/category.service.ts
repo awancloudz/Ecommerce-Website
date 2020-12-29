@@ -13,7 +13,7 @@ import { map } from 'rxjs/operators';
 })
 export class CategoryService {
   private items:CategoryArray[]=[];
-  private url:string="backend/categorylist";
+  private url:string="http://localhost:8000/categorylist";
   constructor(public http: Http) { 
 
   }

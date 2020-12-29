@@ -48,7 +48,7 @@
 								<tr *ngFor="let cart of cartlist.koleksi; let i = index;">
 									<td class="product-thumbnail">
 										<a href="{{ cart.produk.link }}">
-											<img src="backend/fotoupload/{{ cart.produk.foto }}" class="img-fluid" alt="">
+											<img src="http://localhost:8000/fotoupload/{{ cart.produk.foto }}" class="img-fluid" alt="">
 										</a>
 									</td>
 									<td class="product-name">

@@ -57,7 +57,7 @@ export class HomeComponent implements AfterContentInit {
           fotoslide[i] = {
             judul:data[i].judul,
             deskripsi:data[i].deskripsi,
-            foto:"backend/fotoupload/" + data[i].foto,
+            foto:"http://localhost:8000/fotoupload/" + data[i].foto,
             judultombol:data[i].judultombol,
             link:data[i].judultombol,
           };

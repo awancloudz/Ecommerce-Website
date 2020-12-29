@@ -846,7 +846,7 @@ export class ProfileAddProductComponent implements OnInit {
     
     this.fileUploadProgress = '0%';
 
-      this.http.post('backend/productlist', formData, {
+      this.http.post('http://localhost:8000/productlist', formData, {
         headers: headers,
         reportProgress: true,
         observe: 'events',
@@ -1143,7 +1143,7 @@ export class ProfileEditProductComponent implements OnInit {
     
     this.fileUploadProgress = '0%';
 
-      this.http.post('backend/productlist/edit', formData, {
+      this.http.post('http://localhost:8000/productlist/edit', formData, {
         headers: headers,
         reportProgress: true,
         observe: 'events',
@@ -1279,7 +1279,7 @@ export class ProfileAddCategoryComponent implements OnInit {
     
     this.fileUploadProgress = '0%';
 
-      this.http.post('backend/categorylist', formData, {
+      this.http.post('http://localhost:8000/categorylist', formData, {
         headers: headers,
         reportProgress: true,
         observe: 'events',
@@ -1411,7 +1411,7 @@ export class ProfileEditCategoryComponent implements OnInit {
     
     this.fileUploadProgress = '0%';
 
-      this.http.post('backend/categorylist/edit', formData, {
+      this.http.post('http://localhost:8000/categorylist/edit', formData, {
         headers: headers,
         reportProgress: true,
         observe: 'events',
@@ -1525,7 +1525,7 @@ export class ProfileAddSlideComponent implements OnInit {
     
     this.fileUploadProgress = '0%';
 
-      this.http.post('backend/slidelist', formData, {
+      this.http.post('http://localhost:8000/slidelist', formData, {
         headers: headers,
         reportProgress: true,
         observe: 'events',
@@ -1649,7 +1649,7 @@ export class ProfileEditSlideComponent implements OnInit {
     
     this.fileUploadProgress = '0%';
 
-      this.http.post('backend/slidelist/edit', formData, {
+      this.http.post('http://localhost:8000/slidelist/edit', formData, {
         headers: headers,
         reportProgress: true,
         observe: 'events',

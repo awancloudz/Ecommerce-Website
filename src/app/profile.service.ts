@@ -15,11 +15,11 @@ import { map } from 'rxjs/operators';
 })
 export class ProfileService {
   private items:ProfileArray[]=[];
-  private url:string="backend/userlogin";
-  private url2:string="backend/citylist";
-  private url3:string="backend/user";
-  private url4:string="backend/profile";
-  private url5:string="backend/districtlist";
+  private url:string="http://localhost:8000/userlogin";
+  private url2:string="http://localhost:8000/citylist";
+  private url3:string="http://localhost:8000/user";
+  private url4:string="http://localhost:8000/profile";
+  private url5:string="http://localhost:8000/districtlist";
   constructor(public http: Http){ 
     
   }

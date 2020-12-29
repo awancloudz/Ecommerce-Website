@@ -44,7 +44,7 @@
                                         <img src="../../assets/img/box-flat.png" width="150" (click)="fileInput.click()">
                                     </div>
                                     <div *ngIf="!previewUrl && foto != ''">
-                                        <img src="backend/fotoupload/{{foto}}" width="150" (click)="fileInput.click()">
+                                        <img src="http://localhost:8000/fotoupload/{{foto}}" width="150" (click)="fileInput.click()">
                                     </div>
                                     <div *ngIf="fileUploadProgress">
                                         Upload progress: {{ fileUploadProgress }}

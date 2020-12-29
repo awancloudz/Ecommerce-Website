@@ -107,7 +107,7 @@
                             <tr *ngFor="let slide of slidelist">
                               <td class="product-thumbnail">
                                 <a href="{{ slide.link }}">
-                                  <img src="backend/fotoupload/{{ slide.foto }}" class="img-fluid" alt="">
+                                  <img src="http://localhost:8000/fotoupload/{{ slide.foto }}" class="img-fluid" alt="">
                                 </a>
                               </td>
                               <td class="product-name">
@@ -159,7 +159,7 @@
                             <tr *ngFor="let cat of categorylist">
                               <td class="product-thumbnail">
                                 <a href="category/{{ cat.link }}">
-                                  <img src="backend/fotoupload/{{ cat.foto }}" class="img-fluid" alt="">
+                                  <img src="http://localhost:8000/fotoupload/{{ cat.foto }}" class="img-fluid" alt="">
                                 </a>
                               </td>
                               <td class="product-name">
@@ -267,7 +267,7 @@
                             <tr *ngFor="let product of productlist">
                               <td class="product-thumbnail">
                                 <a href="product/{{ product.link }}">
-                                  <img src="backend/fotoupload/{{ product.foto }}" class="img-fluid" alt="">
+                                  <img src="http://localhost:8000/fotoupload/{{ product.foto }}" class="img-fluid" alt="">
                                 </a>
                               </td>
                               <td class="product-name">

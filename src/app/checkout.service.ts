@@ -17,8 +17,8 @@ import { map } from 'rxjs/operators';
 export class CheckoutService {
   private items:CheckoutArray[]=[];
   private items2:CheckoutConfirmationArray[]=[];
-  private url:string="backend/transaction";
-  private url2:string="backend/citylist";
+  private url:string="http://localhost:8000/transaction";
+  private url2:string="http://localhost:8000/citylist";
   private url_track:string="https://ruangapi.com/api/v1/waybill";
   private url_courier:string="https://ruangapi.com/api/v1/shipping";
   private url_rajaongkir:string="https://api.rajaongkir.com/starter/cost";
